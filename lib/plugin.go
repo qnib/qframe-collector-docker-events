@@ -17,10 +17,6 @@ const (
 	dockerAPI = "v1.29"
 )
 
-var (
-	SuperMap = make(map[string]ContainerSupervisor)
-)
-
 
 type Plugin struct {
 	qtypes.Plugin
