@@ -219,6 +219,30 @@
 			"revisionTime": "2017-03-16T20:15:38Z"
 		},
 		{
+			"checksumSHA1": "JS9iqCDhAxpUZI3H/1WBYzeblXo=",
+			"path": "github.com/qnib/qframe-collector-docker-events",
+			"revision": "0ab94d06ba3a7c51ac74c331968ae4b343c69113",
+			"revisionTime": "2017-04-21T16:26:56Z"
+		},
+		{
+			"checksumSHA1": "GZz0uiaVgegIXcbkJ8UR+DirNqk=",
+			"path": "github.com/qnib/qframe-collector-docker-events/lib",
+			"revision": "0ab94d06ba3a7c51ac74c331968ae4b343c69113",
+			"revisionTime": "2017-04-21T16:26:56Z"
+		},
+		{
+			"checksumSHA1": "HwDSvXht/G0qZZsCv37WgJeCJfc=",
+			"path": "github.com/qnib/qframe-collector-tcp",
+			"revision": "0ab94d06ba3a7c51ac74c331968ae4b343c69113",
+			"revisionTime": "2017-04-21T16:26:56Z"
+		},
+		{
+			"checksumSHA1": "gcVtXN358UEMHFZEnroNts9RFp8=",
+			"path": "github.com/qnib/qframe-collector-tcp/lib",
+			"revision": "0ab94d06ba3a7c51ac74c331968ae4b343c69113",
+			"revisionTime": "2017-04-21T16:26:56Z"
+		},
+		{
 			"checksumSHA1": "CdzTPFJJ1XsOL+oTAFL98KMV23U=",
 			"path": "github.com/qnib/qframe-types",
 			"revision": "7c44cada202b10638c48a083c3ae07c8ead04b40",
