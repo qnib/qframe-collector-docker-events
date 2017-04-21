@@ -1,0 +1,17 @@
+workspace:
+  base: /drone
+  path: src/github.com/qnib/qframe-collector-tcp
+
+pipeline:
+  clone:
+    image: plugins/git
+    tags: true
+  test:
+    image: qnib/uplain-golang
+    pull: true
+    commands:
+     - govendor fetch +e
+     - govendor update +l
+     - go build -ldflags "-pluginpath=qframe-collector-tcp" -buildmode=plugin -o tcp.so main.go
+    environment:
+     - GOPATH=/drone/
