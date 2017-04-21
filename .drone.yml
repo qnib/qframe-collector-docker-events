@@ -1,6 +1,6 @@
 workspace:
   base: /drone
-  path: src/github.com/qnib/qframe-collector-tcp
+  path: src/github.com/qnib/qframe-collector-docker-events
 
 pipeline:
   clone:
@@ -12,6 +12,6 @@ pipeline:
     commands:
      - govendor fetch +e
      - govendor update +l
-     - go build -ldflags "-pluginpath=qframe-collector-tcp" -buildmode=plugin -o tcp.so main.go
+     - go build -ldflags "-pluginpath=qframe-collector-docker-events" -buildmode=plugin -o docker-events.so main.go
     environment:
      - GOPATH=/drone/
