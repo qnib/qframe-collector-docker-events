@@ -18,9 +18,7 @@ func Run(qChan qtypes.QChan, cfg config.Config, name string) {
 func main() {
 	qChan := qtypes.NewQChan()
 	qChan.Broadcast()
-	cfgMap := map[string]string{
-		"collector.test.port": "10001",
-	}
+	cfgMap := map[string]string{}
 
 	cfg := config.NewConfig(
 		[]config.Provider{
