@@ -3,9 +3,9 @@ package qframe_collector_docker_events
 import (
 	"fmt"
 	"log"
-	"github.com/moby/moby/client"
+	"github.com/docker/docker/client"
 	"golang.org/x/net/context"
-	"github.com/moby/moby/api/types"
+	"github.com/docker/docker/api/types"
 	"github.com/zpatrick/go-config"
 
 	"github.com/qnib/qframe-types"
