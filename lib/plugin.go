@@ -56,12 +56,17 @@ func (p *Plugin) Run() {
 		case dMsg := <-msgs:
 			qm := qtypes.NewQMsg("docker-event", "docker-events")
 			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
-			cnt, _ := p.Inventory.GetCntByID(dMsg.ID)
-			qm.Data = qtypes.ContainerEvent{
-				Event: dMsg,
-				Container: cnt,
+			if dMsg.Type == "container" {
+				cnt, _ := p.Inventory.GetCntByEvent(dMsg)
+				if dMsg.Action == "die" || dMsg.Action == "destroy" {
+					cnt = types.ContainerJSON{}
+				}
+				qm.Data = qtypes.ContainerEvent{
+					Event:     dMsg,
+					Container: cnt,
+				}
+				p.QChan.Data.Send(qm)
 			}
-			p.QChan.Data.Send(qm)
 		case dErr := <-errs:
 			if dErr != nil {
 				log.Printf("[EE] %v", dErr)
