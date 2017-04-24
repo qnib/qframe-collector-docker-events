@@ -32,10 +32,24 @@ func main() {
 	}
 	go p.Run()
 	time.Sleep(2*time.Second)
-	bg := qChan.Data.Join()
+	dc := qChan.Data.Join()
 	for {
-		qm := bg.Recv().(qtypes.QMsg)
-		fmt.Printf("#### Received: %s\n", qm.Msg)
-		break
+		select {
+		case msg := <- dc.Read:
+			switch msg.(type) {
+			case qtypes.QMsg:
+				qm := msg.(qtypes.QMsg)
+				switch qm.Data.(type) {
+				case qtypes.ContainerEvent:
+					ce := qm.Data.(qtypes.ContainerEvent)
+					if ce.Event.Type == "container" && ce.Event.Action == "start" {
+						fmt.Printf("#### Received container.start event for: %s\n", ce.Container.Names)
+						break
+					}
+				}
+
+			}
+		}
+
 	}
 }

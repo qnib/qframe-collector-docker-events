@@ -21,6 +21,8 @@ const (
 type Plugin struct {
 	qtypes.Plugin
 	engCli *client.Client
+	Inventory qtypes.ContainerInventory
+
 }
 
 func New(qChan qtypes.QChan, cfg config.Config, name string) (Plugin, error) {
@@ -35,6 +37,7 @@ func (p *Plugin) Run() {
 	dockerHost := p.CfgStringOr("docker-host", "unix:///var/run/docker.sock")
 	// Filter start/stop event of a container
 	engineCli, err := client.NewClient(dockerHost, dockerAPI, nil, nil)
+	p.Inventory = qtypes.NewContainerInventory(engineCli)
 	if err != nil {
 		p.Log("error", fmt.Sprintf("Could not connect docker/docker/client to '%s': %v", dockerHost, err))
 		return
@@ -53,7 +56,11 @@ func (p *Plugin) Run() {
 		case dMsg := <-msgs:
 			qm := qtypes.NewQMsg("docker-event", "docker-events")
 			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
-			qm.Data = dMsg
+			cnt, _ := p.Inventory.GetCntByID(dMsg.ID)
+			qm.Data = qtypes.ContainerEvent{
+				Event: dMsg,
+				Container: cnt,
+			}
 			p.QChan.Data.Send(qm)
 		case dErr := <-errs:
 			if dErr != nil {
