@@ -279,6 +279,18 @@
 			"revisionTime": "2017-03-16T20:15:38Z"
 		},
 		{
+			"checksumSHA1": "Y8bDGz4FkzeLtFS1fDh0pUxStsI=",
+			"path": "github.com/qnib/qframe-collector-docker-events",
+			"revision": "f5dd2ebfec7fd88cfd3c85a46616a54f9be9e4e0",
+			"revisionTime": "2017-04-24T10:56:44Z"
+		},
+		{
+			"checksumSHA1": "oLcrqXGlZUVNIchIDZ56lRj17d0=",
+			"path": "github.com/qnib/qframe-collector-docker-events/lib",
+			"revision": "f5dd2ebfec7fd88cfd3c85a46616a54f9be9e4e0",
+			"revisionTime": "2017-04-24T10:56:44Z"
+		},
+		{
 			"checksumSHA1": "kP0izzECfJiRPVK5x/WaS2jHGpI=",
 			"path": "github.com/qnib/qframe-types",
 			"revision": "5876b560890a58f777235831aa6dceacafbf7623",
