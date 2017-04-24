@@ -183,6 +183,72 @@
 			"revisionTime": "2016-07-08T17:25:13Z"
 		},
 		{
+			"checksumSHA1": "DpQ9Bs+Y4bwI6peCJ9NBWSjRAnI=",
+			"path": "github.com/elastic/beats/libbeat/common",
+			"revision": "3efb9dbf10e0a86d97632b1d084b5811b99db29d",
+			"revisionTime": "2017-04-24T09:11:23Z"
+		},
+		{
+			"checksumSHA1": "ckhJGlOHkRVad5BvVRnbsPNrZVw=",
+			"path": "github.com/elastic/beats/libbeat/common/file",
+			"revision": "3efb9dbf10e0a86d97632b1d084b5811b99db29d",
+			"revisionTime": "2017-04-24T09:11:23Z"
+		},
+		{
+			"checksumSHA1": "05w0OxJYuC5GWJa+sujrW7YGk80=",
+			"path": "github.com/elastic/beats/libbeat/logp",
+			"revision": "3efb9dbf10e0a86d97632b1d084b5811b99db29d",
+			"revisionTime": "2017-04-24T09:11:23Z"
+		},
+		{
+			"checksumSHA1": "rY17rQxDUFpQewr6JZ8v/Z6aM+U=",
+			"path": "github.com/elastic/beats/libbeat/monitoring",
+			"revision": "3efb9dbf10e0a86d97632b1d084b5811b99db29d",
+			"revisionTime": "2017-04-24T09:11:23Z"
+		},
+		{
+			"checksumSHA1": "d5b9Ra0zcwznwemxEJmyW28FZJ0=",
+			"path": "github.com/elastic/beats/libbeat/paths",
+			"revision": "3efb9dbf10e0a86d97632b1d084b5811b99db29d",
+			"revisionTime": "2017-04-24T09:11:23Z"
+		},
+		{
+			"checksumSHA1": "6UaJp3hUpEJvcu7COoRNhHPlqfg=",
+			"path": "github.com/elastic/go-ucfg",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
+			"checksumSHA1": "8cr5YhslUMgpvF2JebYvKC+Ezr4=",
+			"path": "github.com/elastic/go-ucfg/cfgutil",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
+			"checksumSHA1": "Q2qrc/nI9d1tNzWTmfrkWvBNqsc=",
+			"path": "github.com/elastic/go-ucfg/flag",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
+			"checksumSHA1": "uOrhvj7stlb0foxGZ5vbC1XJeto=",
+			"path": "github.com/elastic/go-ucfg/internal/parse",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
+			"checksumSHA1": "sMBM95+VYBPhwtNVHqqN1yrvk1o=",
+			"path": "github.com/elastic/go-ucfg/json",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
+			"checksumSHA1": "qvzj0KzxrWvYhHIbo+FwBxUNDFw=",
+			"path": "github.com/elastic/go-ucfg/yaml",
+			"revision": "ec8488a52542c0c51e42e8ea204dcaff400bc644",
+			"revisionTime": "2017-02-07T06:38:51Z"
+		},
+		{
 			"checksumSHA1": "ImX1uv6O09ggFeBPUJJ2nu7MPSA=",
 			"path": "github.com/ghodss/yaml",
 			"revision": "0ca9ea5df5451ffdf184b4428c902747c2c11cd7",
@@ -201,18 +267,6 @@
 			"revisionTime": "2017-03-04T07:09:54Z"
 		},
 		{
-			"checksumSHA1": "pfb2gH976rRUKUKGg5ZbEL8H/Z4=",
-			"path": "github.com/moby/moby/api/types",
-			"revision": "80013fd59a19fa1ddccc7c3d879a4571806024c7",
-			"revisionTime": "2017-04-22T01:41:45Z"
-		},
-		{
-			"checksumSHA1": "PlfOUNsMxndfhX6Qq/f/28gbzqc=",
-			"path": "github.com/moby/moby/client",
-			"revision": "80013fd59a19fa1ddccc7c3d879a4571806024c7",
-			"revisionTime": "2017-04-22T01:41:45Z"
-		},
-		{
 			"checksumSHA1": "qj7IAU2RRq99oaIEGH0eLfX/UcM=",
 			"path": "github.com/opencontainers/go-digest",
 			"revision": "aa2ec055abd10d26d539eb630a92241b781ce4bc",
@@ -225,16 +279,22 @@
 			"revisionTime": "2017-03-16T20:15:38Z"
 		},
 		{
-			"checksumSHA1": "+InAwqIN/3FvfV4pFr5nmE1lf48=",
+			"checksumSHA1": "kP0izzECfJiRPVK5x/WaS2jHGpI=",
 			"path": "github.com/qnib/qframe-types",
-			"revision": "7c44cada202b10638c48a083c3ae07c8ead04b40",
-			"revisionTime": "2017-04-20T10:58:05Z"
+			"revision": "5876b560890a58f777235831aa6dceacafbf7623",
+			"revisionTime": "2017-04-23T18:49:17Z"
 		},
 		{
 			"checksumSHA1": "qnyDvF3qA9h5o9nY9GiAIx4qdi0=",
 			"path": "github.com/qnib/qframe-utils",
 			"revision": "d7ba720f084e04bcb015cc144149b2abb5f6b294",
 			"revisionTime": "2017-04-14T19:04:25Z"
+		},
+		{
+			"checksumSHA1": "zmC8/3V4ls53DJlNTKDZwPSC/dA=",
+			"path": "github.com/satori/go.uuid",
+			"revision": "5bf94b69c6b68ee1b541973bb8e1144db23a194b",
+			"revisionTime": "2017-03-21T23:07:31Z"
 		},
 		{
 			"checksumSHA1": "m8hYD/alsufIYIM7sR06wbL+dKo=",
