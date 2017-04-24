@@ -43,7 +43,7 @@ func main() {
 				case qtypes.ContainerEvent:
 					ce := qm.Data.(qtypes.ContainerEvent)
 					if ce.Event.Type == "container" && ce.Event.Action == "start" {
-						fmt.Printf("#### Received container.start event for: %s\n", ce.Container.Names)
+						fmt.Printf("#### Received container.start event for: %s\n", ce.Container.Name)
 						break
 					}
 				}

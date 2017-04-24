@@ -285,16 +285,16 @@
 			"revisionTime": "2017-04-24T10:56:44Z"
 		},
 		{
-			"checksumSHA1": "oLcrqXGlZUVNIchIDZ56lRj17d0=",
+			"checksumSHA1": "z2SxFvtvYjjVDAPE2SOymYpQL9s=",
 			"path": "github.com/qnib/qframe-collector-docker-events/lib",
-			"revision": "f5dd2ebfec7fd88cfd3c85a46616a54f9be9e4e0",
-			"revisionTime": "2017-04-24T10:56:44Z"
+			"revision": "9835004a1c1449728abb05723b5f59ae285bcdeb",
+			"revisionTime": "2017-04-24T10:58:31Z"
 		},
 		{
-			"checksumSHA1": "kP0izzECfJiRPVK5x/WaS2jHGpI=",
+			"checksumSHA1": "yZe2Vz0L643yy1lkhro/8sNW+Mo=",
 			"path": "github.com/qnib/qframe-types",
-			"revision": "5876b560890a58f777235831aa6dceacafbf7623",
-			"revisionTime": "2017-04-23T18:49:17Z"
+			"revision": "a8cb55c0736b4168dd06de56807b17d7466eb204",
+			"revisionTime": "2017-04-24T10:54:19Z"
 		},
 		{
 			"checksumSHA1": "qnyDvF3qA9h5o9nY9GiAIx4qdi0=",
