@@ -37,7 +37,7 @@ func (p *Plugin) Run() {
 	dockerHost := p.CfgStringOr("docker-host", "unix:///var/run/docker.sock")
 	// Filter start/stop event of a container
 	engineCli, err := client.NewClient(dockerHost, dockerAPI, nil, nil)
-	p.Inventory = qtypes.NewContainerInventory(engineCli)
+	p.Inventory = qtypes.NewContainerInventory()
 	if err != nil {
 		p.Log("error", fmt.Sprintf("Could not connect docker/docker/client to '%s': %v", dockerHost, err))
 		return
@@ -57,7 +57,20 @@ func (p *Plugin) Run() {
 			qm := qtypes.NewQMsg("docker-event", "docker-events")
 			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
 			if dMsg.Type == "container" {
-				cnt, _ := p.Inventory.GetCntByEvent(dMsg)
+
+				cnt, err := p.Inventory.GetCntByID(dMsg.Actor.ID)
+				if err != nil {
+					cnt, err := engineCli.ContainerInspect(context.Background(), dMsg.Actor.ID)
+					if err != nil {
+						p.Log("error", fmt.Sprintf("Could not find container '%s': %v", dMsg.Actor.ID, err.Error()))
+						continue
+					}
+					ce := qtypes.ContainerEvent{
+						Event:     dMsg,
+						Container: cnt,
+					}
+					p.Inventory.SetCntByEvent(ce)
+				}
 				if dMsg.Action == "die" || dMsg.Action == "destroy" {
 					cnt = types.ContainerJSON{}
 				}
