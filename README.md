@@ -24,12 +24,17 @@ $ docker run --rm --name Cnt$(date +%s) ubuntu:latest sleep 1
 
 ```bash
 $ docker run -ti --name qframe-collector-docker-events --rm -e SKIP_ENTRYPOINTS=1 \
-           -v ${GOPATH}/src/github.com/qnib/qframe-collector-docker-events:/usr/local/src/github.com/qnib/qframe-collector-docker-events \
-           -v ${GOPATH}/src/github.com/qnib/qframe-types:/usr/local/src/github.com/qnib/qframe-types \
-           -v /var/run/docker.sock:/var/run/docker.sock \
-           -w /usr/local/src/github.com/qnib/qframe-collector-docker-events \
-            qnib/uplain-golang bash
+                -v ${GOPATH}/src/github.com/qnib/qframe-collector-docker-events:/usr/local/src/github.com/qnib/qframe-collector-docker-events \
+                -v ${GOPATH}/src/github.com/qnib/qframe-types:/usr/local/src/github.com/qnib/qframe-types \
+                -v ${GOPATH}/src/github.com/qnib/qframe-utils:/usr/local/src/github.com/qnib/qframe-utils \
+                -v ${GOPATH}/src/github.com/qnib/qframe-filter-inventory/lib:/usr/local/src/github.com/qnib/qframe-filter-inventory/lib \
+                -v ${GOPATH}/src/github.com/qnib/qframe-inventory/lib:/usr/local/src/github.com/qnib/qframe-inventory/lib \
+                -v /var/run/docker.sock:/var/run/docker.sock \
+                -w /usr/local/src/github.com/qnib/qframe-collector-docker-events \
+                qnib/uplain-golang bash
 > execute CMD 'bash'
-root@7b5bf352e99f:/usr/local/src/github.com/qnib/qframe-collector-docker-events# govendor update github.com/qnib/qframe-types github.com/qnib/qframe-utils ; govendor fetch +e ; govendor fetch +m
-root@7b5bf352e99f:/usr/local/src/github.com/qnib/qframe-collector-docker-events# go run main.go
+$ govendor update github.com/qnib/qframe-types github.com/qnib/qframe-utils github.com/qnib/qframe-inventory/lib \
+                  github.com/qnib/qframe-filter-inventory/lib github.com/qnib/qframe-collector-docker-events/lib
+$ govendor fetch +m
+$ go run main.go
 ```
