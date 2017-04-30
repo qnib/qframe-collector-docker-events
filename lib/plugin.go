@@ -9,7 +9,6 @@ import (
 
 	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-inventory/lib"
-	"github.com/qnib/qframe-filter-inventory/lib"
 )
 
 const (
@@ -58,9 +57,8 @@ func (p *Plugin) Run() {
 		if err != nil {
 			continue
 		}
-		cItem := qframe_filter_inventory.Container{Container: cJson}
-		p.Log("debug", fmt.Sprintf("Already running container %s: SetItem(%s)", cItem.Container.Name, cItem.Container.ID))
-		inv.SetItem(cnt.ID, cItem)
+		p.Log("debug", fmt.Sprintf("Already running container %s: SetItem(%s)", cJson.Name, cJson.ID))
+		inv.SetItem(cnt.ID, cJson)
 	}
 	msgs, errs := engineCli.Events(context.Background(), types.EventsOptions{})
 	for {
@@ -70,7 +68,7 @@ func (p *Plugin) Run() {
 			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
 			qm.Data = dMsg
 			if dMsg.Type == "container" {
-				cItem, err := inv.GetItem(dMsg.Actor.ID)
+				cJson, err := inv.GetItem(dMsg.Actor.ID)
 				if err != nil {
 					if dMsg.Action == "die" || dMsg.Action == "destroy" {
 						p.Log("error", fmt.Sprintf("Container %s just '%s' without having an entry in the Inventory", dMsg.Actor.ID, dMsg.Action))
@@ -87,24 +85,19 @@ func (p *Plugin) Run() {
 							Container: cJson,
 						}
 						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cJson.Name, cJson.ID))
-						inv.SetItem(dMsg.Actor.ID, qframe_filter_inventory.Container{Container: cJson})
+						inv.SetItem(dMsg.Actor.ID, cJson)
 						p.QChan.Data.Send(qm)
 						continue
 					}
 					continue
 				}
-				switch cItem.(type) {
-				case qframe_filter_inventory.Container:
-					p.Log("debug", "Container was found in the inventory...")
-					cJson := cItem.(qframe_filter_inventory.Container).Container
-					qm.Data = qtypes.ContainerEvent{
-						Event:     dMsg,
-						Container: cJson,
-					}
-					p.QChan.Data.Send(qm)
-					continue
-
+				p.Log("debug", "Container was found in the inventory...")
+				qm.Data = qtypes.ContainerEvent{
+					Event:     dMsg,
+					Container: cJson,
 				}
+				p.QChan.Data.Send(qm)
+				continue
 			}
 		case dErr := <-errs:
 			if dErr != nil {
