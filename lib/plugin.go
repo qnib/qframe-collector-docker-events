@@ -2,18 +2,20 @@ package qframe_collector_docker_events
 
 import (
 	"fmt"
-	"log"
+	//"log"
 	"github.com/docker/docker/client"
 	"golang.org/x/net/context"
-	"github.com/docker/docker/api/types"
 	"github.com/zpatrick/go-config"
+	"github.com/docker/docker/api/types"
 
 	"github.com/qnib/qframe-types"
+	"github.com/qnib/qframe-inventory/lib"
+	"github.com/qnib/qframe-filter-inventory/lib"
 )
 
 const (
 	version = "0.1.1"
-	pluginTyp = "collector"
+	pluginTyp = qtypes.COLLECTOR
 	dockerAPI = "v1.29"
 )
 
@@ -21,7 +23,6 @@ const (
 type Plugin struct {
 	qtypes.Plugin
 	engCli *client.Client
-	Inventory qtypes.ContainerInventory
 
 }
 
@@ -34,10 +35,10 @@ func New(qChan qtypes.QChan, cfg config.Config, name string) (Plugin, error) {
 }
 
 func (p *Plugin) Run() {
+	ctx := context.Background()
 	dockerHost := p.CfgStringOr("docker-host", "unix:///var/run/docker.sock")
 	// Filter start/stop event of a container
 	engineCli, err := client.NewClient(dockerHost, dockerAPI, nil, nil)
-	p.Inventory = qtypes.NewContainerInventory(engineCli)
 	if err != nil {
 		p.Log("error", fmt.Sprintf("Could not connect docker/docker/client to '%s': %v", dockerHost, err))
 		return
@@ -49,27 +50,66 @@ func (p *Plugin) Run() {
 	} else {
 		p.Log("info", fmt.Sprintf("Connected to '%s' / v'%s'", info.Name, info.ServerVersion))
 	}
-
+	// Inventory Init
+	inv := qframe_inventory.NewInventory()
+	// Fire events for already started containers
+	cnts, _ := engineCli.ContainerList(ctx, types.ContainerListOptions{})
+	for _, cnt := range cnts {
+		cJson, err := engineCli.ContainerInspect(ctx, cnt.ID)
+		if err != nil {
+			continue
+		}
+		cItem := qframe_filter_inventory.Container{Container: cJson}
+		p.Log("debug", fmt.Sprintf("Already running container %s: SetItem(%s)", cItem.Container.Name, cItem.Container.ID))
+		inv.SetItem(cnt.ID, cItem)
+	}
 	msgs, errs := engineCli.Events(context.Background(), types.EventsOptions{})
 	for {
 		select {
 		case dMsg := <-msgs:
 			qm := qtypes.NewQMsg("docker-event", "docker-events")
 			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+			qm.Data = dMsg
 			if dMsg.Type == "container" {
-				cnt, _ := p.Inventory.GetCntByEvent(dMsg)
-				if dMsg.Action == "die" || dMsg.Action == "destroy" {
-					cnt = types.ContainerJSON{}
+				cItem, err := inv.GetItem(dMsg.Actor.ID)
+				if err != nil {
+					if dMsg.Action == "die" || dMsg.Action == "destroy" {
+						p.Log("error", fmt.Sprintf("Container %s just '%s' without having an entry in the Inventory", dMsg.Actor.ID, dMsg.Action))
+						continue
+					}
+					if dMsg.Action == "start" {
+						cJson, err := engineCli.ContainerInspect(ctx, dMsg.Actor.ID)
+						if err != nil {
+							p.Log("error", fmt.Sprintf("Could not inspect '%s'", dMsg.Actor.ID))
+							continue
+						}
+						qm.Data = qtypes.ContainerEvent{
+							Event:     dMsg,
+							Container: cJson,
+						}
+						p.Log("debug", "Container was not found in the inventory...")
+						inv.SetItem(dMsg.Actor.ID, qframe_filter_inventory.Container{Container: cJson})
+						p.QChan.Data.Send(qm)
+						continue
+					}
+					continue
 				}
-				qm.Data = qtypes.ContainerEvent{
-					Event:     dMsg,
-					Container: cnt,
+				switch cItem.(type) {
+				case qframe_filter_inventory.Container:
+					p.Log("debug", "Container was found in the inventory...")
+					cJson := cItem.(qframe_filter_inventory.Container).Container
+					qm.Data = qtypes.ContainerEvent{
+						Event:     dMsg,
+						Container: cJson,
+					}
+					p.QChan.Data.Send(qm)
+					continue
+
 				}
-				p.QChan.Data.Send(qm)
 			}
 		case dErr := <-errs:
 			if dErr != nil {
-				log.Printf("[EE] %v", dErr)
+				p.Log("error", dErr.Error())
 			}
 		}
 	}
