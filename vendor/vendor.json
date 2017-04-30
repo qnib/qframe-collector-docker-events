@@ -337,10 +337,10 @@
 			"revisionTime": "2017-04-24T10:56:44Z"
 		},
 		{
-			"checksumSHA1": "KzOoC2dzpy8i/025YOiXSEcYeSI=",
+			"checksumSHA1": "kosYJTOsKKHg8ijLSpxDs2lpAD4=",
 			"path": "github.com/qnib/qframe-collector-docker-events/lib",
-			"revision": "9da920d95b71dc5b00253cd84f9ba32dd7c6de91",
-			"revisionTime": "2017-04-24T14:39:06Z"
+			"revision": "69358ee1db384eedced05417f7e39dc56327677e",
+			"revisionTime": "2017-04-30T13:12:33Z"
 		},
 		{
 			"checksumSHA1": "6OCrG1eS4M+GxPS+X323yQcxVd4=",

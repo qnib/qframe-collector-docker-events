@@ -2,7 +2,6 @@ package qframe_collector_docker_events
 
 import (
 	"fmt"
-	//"log"
 	"github.com/docker/docker/client"
 	"golang.org/x/net/context"
 	"github.com/zpatrick/go-config"
@@ -14,7 +13,7 @@ import (
 )
 
 const (
-	version = "0.1.1"
+	version = "0.1.3"
 	pluginTyp = qtypes.COLLECTOR
 	dockerAPI = "v1.29"
 )
@@ -87,7 +86,7 @@ func (p *Plugin) Run() {
 							Event:     dMsg,
 							Container: cJson,
 						}
-						p.Log("debug", "Container was not found in the inventory...")
+						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cJson.Name, cJson.ID))
 						inv.SetItem(dMsg.Actor.ID, qframe_filter_inventory.Container{Container: cJson})
 						p.QChan.Data.Send(qm)
 						continue

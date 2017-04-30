@@ -73,6 +73,7 @@ func main() {
 	go startCnt(engineCli, cntName)
 
 	dc := qChan.Data.Join()
+	doStop := false
 	for {
 		select {
 		case msg := <- dc.Read:
@@ -84,12 +85,14 @@ func main() {
 					ce := qm.Data.(qtypes.ContainerEvent)
 					if ce.Event.Type == "container" && ce.Event.Action == "start" {
 						fmt.Printf("#### Received container.start event for: %s\n", ce.Container.Name)
-						break
+						doStop = true
 					}
 				}
 
 			}
 		}
-
+		if doStop {
+			break
+		}
 	}
 }
