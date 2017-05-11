@@ -63,10 +63,10 @@
 			"revisionTime": "2017-04-29T17:05:32Z"
 		},
 		{
-			"checksumSHA1": "rbjCIKymiTQJ9hxsfmsU/nocG/k=",
+			"checksumSHA1": "XRM8n6GhEuZMchTMF+LmzVzMMlE=",
 			"path": "github.com/docker/docker/api/types",
-			"revision": "80013fd59a19fa1ddccc7c3d879a4571806024c7",
-			"revisionTime": "2017-04-22T01:41:45Z"
+			"revision": "815e8bb885c3d9f70ab763d9844e857590b40ad3",
+			"revisionTime": "2017-05-10T10:21:28Z"
 		},
 		{
 			"checksumSHA1": "jVJDbe0IcyjoKc2xbohwzQr+FF0=",
@@ -313,10 +313,10 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "IFuo53FTd6s+Ci2PKkCW+DH7vqM=",
+			"checksumSHA1": "UE6Ee/plYbXy7qQunQmy70k145s=",
 			"path": "github.com/moby/moby/api/types",
-			"revision": "4219156a6254bdc7d270f06742037df8e2708a9a",
-			"revisionTime": "2017-04-29T17:05:32Z"
+			"revision": "815e8bb885c3d9f70ab763d9844e857590b40ad3",
+			"revisionTime": "2017-05-10T10:21:28Z"
 		},
 		{
 			"checksumSHA1": "qj7IAU2RRq99oaIEGH0eLfX/UcM=",
@@ -337,10 +337,10 @@
 			"revisionTime": "2017-04-24T10:56:44Z"
 		},
 		{
-			"checksumSHA1": "kosYJTOsKKHg8ijLSpxDs2lpAD4=",
+			"checksumSHA1": "QdU/9fZ+zZ/wBdRGMwObOIqzDFc=",
 			"path": "github.com/qnib/qframe-collector-docker-events/lib",
-			"revision": "69358ee1db384eedced05417f7e39dc56327677e",
-			"revisionTime": "2017-04-30T13:12:33Z"
+			"revision": "47d5f0949ada428f97b0d57b728e5797c0d5ea4e",
+			"revisionTime": "2017-05-01T08:27:02Z"
 		},
 		{
 			"checksumSHA1": "6OCrG1eS4M+GxPS+X323yQcxVd4=",
@@ -348,15 +348,15 @@
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "fs5f9pMW186LI89t2Fcp43yFXRQ=",
+			"checksumSHA1": "Twav4HZvB8sEoyNMR5HO/uMj91E=",
 			"path": "github.com/qnib/qframe-inventory/lib",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "BcnVcV3BFVhpzU0XXTdQmcPYL5E=",
+			"checksumSHA1": "VW4kMqUBCzwsWI7dQqYD6jCebJE=",
 			"path": "github.com/qnib/qframe-types",
-			"revision": "7ed6008142f7be2742111c2398be730f352d9f8b",
-			"revisionTime": "2017-04-29T15:47:29Z"
+			"revision": "61492b7e5ccab03e0eeb1b75f8f96bbc769992ba",
+			"revisionTime": "2017-05-09T13:33:47Z"
 		},
 		{
 			"checksumSHA1": "cXF2ScH6MC6Y3rijJx6usaA1prY=",

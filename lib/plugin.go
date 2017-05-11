@@ -9,11 +9,13 @@ import (
 
 	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-inventory/lib"
+	"time"
 )
 
 const (
 	version = "0.2.1"
 	pluginTyp = qtypes.COLLECTOR
+	pluginPkg = "docker-events"
 	dockerAPI = "v1.29"
 )
 
@@ -27,7 +29,7 @@ type Plugin struct {
 func New(qChan qtypes.QChan, cfg config.Config, name string) (Plugin, error) {
 	var err error
 	p := Plugin{
-		Plugin: qtypes.NewNamedPlugin(qChan, cfg, pluginTyp, name, version),
+		Plugin: qtypes.NewNamedPlugin(qChan, cfg, pluginTyp, pluginPkg,  name, version),
 	}
 	return p, err
 }
@@ -65,39 +67,41 @@ func (p *Plugin) Run() {
 	for {
 		select {
 		case dMsg := <-msgs:
-			qm := qtypes.NewQMsg("docker-event", "docker-events")
-			qm.Msg = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
-			qm.Data = dMsg
+			base := qtypes.NewTimedBase(p.Name, time.Unix(dMsg.Time, 0))
 			if dMsg.Type == "container" {
-				cJson, err := inv.GetItem(dMsg.Actor.ID)
+				cnt, err := inv.GetItem(dMsg.Actor.ID)
 				if err != nil {
-					if dMsg.Action == "die" || dMsg.Action == "destroy" {
-						p.Log("error", fmt.Sprintf("Container %s just '%s' without having an entry in the Inventory", dMsg.Actor.ID, dMsg.Action))
+					switch dMsg.Action {
+					case "die", "destroy":
+						p.Log("debug", fmt.Sprintf("Container %s just '%s' without having an entry in the Inventory", dMsg.Actor.ID, dMsg.Action))
 						continue
-					}
-					if dMsg.Action == "start" {
-						cJson, err := engineCli.ContainerInspect(ctx, dMsg.Actor.ID)
+					case "create", "attach", "commit","resize":
+						continue
+					case "start":
+						cnt, err := engineCli.ContainerInspect(ctx, dMsg.Actor.ID)
 						if err != nil {
 							p.Log("error", fmt.Sprintf("Could not inspect '%s'", dMsg.Actor.ID))
 							continue
 						}
-						qm.Data = qtypes.ContainerEvent{
-							Event:     dMsg,
-							Container: cJson,
-						}
-						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cJson.Name, cJson.ID))
-						inv.SetItem(dMsg.Actor.ID, cJson)
-						p.QChan.Data.Send(qm)
+						inv.SetItem(dMsg.Actor.ID, cnt)
+						ce := qtypes.NewContainerEvent(base, cnt, dMsg)
+						ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
+						p.QChan.Data.Send(ce)
 						continue
 					}
+				}
+
+				p.Log("debug", fmt.Sprintf("Container '%s' was found in the inventory...", dMsg.Actor.Attributes["name"]))
+				if err != nil {
+					msg := fmt.Sprintf("Could not find container '%s' in invntory while it is doing '%s.%s'", dMsg.Actor.ID, dMsg.Type, dMsg.Action)
+					p.Log("error", msg)
 					continue
 				}
-				p.Log("debug", "Container was found in the inventory...")
-				qm.Data = qtypes.ContainerEvent{
-					Event:     dMsg,
-					Container: cJson,
-				}
-				p.QChan.Data.Send(qm)
+				ce := qtypes.NewContainerEvent(base, cnt, dMsg)
+				ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+				p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
+				p.QChan.Data.Send(ce)
 				continue
 			}
 		case dErr := <-errs:
