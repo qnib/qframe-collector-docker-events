@@ -35,7 +35,7 @@ func New(qChan qtypes.QChan, cfg *config.Config, name string) (Plugin, error) {
 }
 
 func (p *Plugin) Run() {
-	p.Log("info", fmt.Sprintf("Start docker-events collector v%s", p.Version))
+	p.Log("notice", fmt.Sprintf("Start docker-events collector v%s", p.Version))
 	ctx := context.Background()
 	dockerHost := p.CfgStringOr("docker-host", "unix:///var/run/docker.sock")
 	// Filter start/stop event of a container
