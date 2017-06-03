@@ -2,34 +2,33 @@ package qframe_collector_docker_events
 
 import (
 	"fmt"
-	"github.com/docker/docker/client"
-	"golang.org/x/net/context"
-	"github.com/zpatrick/go-config"
 	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/client"
+	"github.com/zpatrick/go-config"
+	"golang.org/x/net/context"
 
-	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-inventory/lib"
+	"github.com/qnib/qframe-types"
+	"strings"
 	"time"
 )
 
 const (
-	version = "0.2.3"
+	version   = "0.2.4"
 	pluginTyp = qtypes.COLLECTOR
 	pluginPkg = "docker-events"
 	dockerAPI = "v1.29"
 )
 
-
 type Plugin struct {
 	qtypes.Plugin
 	engCli *client.Client
-
 }
 
 func New(qChan qtypes.QChan, cfg *config.Config, name string) (Plugin, error) {
 	var err error
 	p := Plugin{
-		Plugin: qtypes.NewNamedPlugin(qChan, cfg, pluginTyp, pluginPkg,  name, version),
+		Plugin: qtypes.NewNamedPlugin(qChan, cfg, pluginTyp, pluginPkg, name, version),
 	}
 	return p, err
 }
@@ -69,13 +68,20 @@ func (p *Plugin) Run() {
 		case dMsg := <-msgs:
 			base := qtypes.NewTimedBase(p.Name, time.Unix(dMsg.Time, 0))
 			if dMsg.Type == "container" {
+				data := map[string]string{"args": ""}
+				if strings.HasPrefix(dMsg.Action, "exec_") {
+					exec := strings.Split(dMsg.Action, ":")
+					dMsg.Action = exec[0]
+					data["args"] = strings.Join(exec[1:], " ")
+				}
+				data["action"] = dMsg.Action
 				cnt, err := inv.GetItem(dMsg.Actor.ID)
 				if err != nil {
 					switch dMsg.Action {
 					case "die", "destroy":
 						p.Log("debug", fmt.Sprintf("Container %s just '%s' without having an entry in the Inventory", dMsg.Actor.ID, dMsg.Action))
 						continue
-					case "create", "attach", "commit","resize":
+					case "create", "attach", "commit", "resize":
 						continue
 					case "start":
 						cnt, err := engineCli.ContainerInspect(ctx, dMsg.Actor.ID)
@@ -85,7 +91,10 @@ func (p *Plugin) Run() {
 						}
 						inv.SetItem(dMsg.Actor.ID, cnt)
 						ce := qtypes.NewContainerEvent(base, cnt, dMsg)
-						ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+						for k, v := range data {
+							ce.Data[k] = v
+						}
+						ce.Message = fmt.Sprintf("%s: %s.%s %v", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action, data)
 						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 						p.QChan.Data.Send(ce)
 						continue
@@ -99,7 +108,10 @@ func (p *Plugin) Run() {
 					continue
 				}
 				ce := qtypes.NewContainerEvent(base, cnt, dMsg)
-				ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+				for k, v := range data {
+					ce.Data[k] = v
+				}
+				ce.Message = fmt.Sprintf("%s: %s.%s %v", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action, data)
 				p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 				p.QChan.Data.Send(ce)
 				continue
