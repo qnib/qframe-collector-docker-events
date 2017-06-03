@@ -10,6 +10,7 @@ import (
 	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-inventory/lib"
 	"time"
+	"strings"
 )
 
 const (
@@ -69,6 +70,13 @@ func (p *Plugin) Run() {
 		case dMsg := <-msgs:
 			base := qtypes.NewTimedBase(p.Name, time.Unix(dMsg.Time, 0))
 			if dMsg.Type == "container" {
+				data := map[string]string{"args": ""}
+				if strings.HasPrefix(dMsg.Action, "exec_") {
+					exec := strings.Split(dMsg.Action, ":")
+					dMsg.Action = exec[0]
+					data["args"] = strings.Join(exec[1:], " ")
+				}
+				data["action"] = dMsg.Action
 				cnt, err := inv.GetItem(dMsg.Actor.ID)
 				if err != nil {
 					switch dMsg.Action {
@@ -85,7 +93,10 @@ func (p *Plugin) Run() {
 						}
 						inv.SetItem(dMsg.Actor.ID, cnt)
 						ce := qtypes.NewContainerEvent(base, cnt, dMsg)
-						ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+						for k, v := range data {
+							ce.Data[k] = v
+						}
+						ce.Message = fmt.Sprintf("%s: %s.%s %v", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action, data)
 						p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 						p.QChan.Data.Send(ce)
 						continue
@@ -99,7 +110,10 @@ func (p *Plugin) Run() {
 					continue
 				}
 				ce := qtypes.NewContainerEvent(base, cnt, dMsg)
-				ce.Message = fmt.Sprintf("%s: %s.%s", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action)
+				for k, v := range data {
+					ce.Data[k] = v
+				}
+				ce.Message = fmt.Sprintf("%s: %s.%s %v", dMsg.Actor.Attributes["name"], dMsg.Type, dMsg.Action, data)
 				p.Log("debug", fmt.Sprintf("Just started container %s: SetItem(%s)", cnt.Name, cnt.ID))
 				p.QChan.Data.Send(ce)
 				continue
