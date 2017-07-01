@@ -153,6 +153,26 @@
 			"revisionTime": "2017-04-29T17:05:32Z"
 		},
 		{
+			"path": "github.com/docker/docker/opts",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/archive",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/fileutils",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/homedir",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/idtools",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "5qccCXTTyEBj19AxaIgfTjNPdaU=",
 			"path": "github.com/docker/docker/pkg/ioutils",
 			"revision": "80013fd59a19fa1ddccc7c3d879a4571806024c7",
@@ -165,10 +185,26 @@
 			"revisionTime": "2017-04-29T17:05:32Z"
 		},
 		{
+			"path": "github.com/docker/docker/pkg/jsonmessage",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "ndnAFCfsGC3upNQ6jAEwzxcurww=",
 			"path": "github.com/docker/docker/pkg/longpath",
 			"revision": "4219156a6254bdc7d270f06742037df8e2708a9a",
 			"revisionTime": "2017-04-29T17:05:32Z"
+		},
+		{
+			"path": "github.com/docker/docker/pkg/pools",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/promise",
+			"revision": ""
+		},
+		{
+			"path": "github.com/docker/docker/pkg/stdcopy",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "SXjPQfi84j+BFZi4Fl1c/OC/f7M=",
@@ -291,6 +327,10 @@
 			"revisionTime": "2017-02-07T06:38:51Z"
 		},
 		{
+			"path": "github.com/fsouza/go-dockerclient",
+			"revision": ""
+		},
+		{
 			"checksumSHA1": "ImX1uv6O09ggFeBPUJJ2nu7MPSA=",
 			"path": "github.com/ghodss/yaml",
 			"revision": "0ca9ea5df5451ffdf184b4428c902747c2c11cd7",
@@ -309,20 +349,28 @@
 			"revisionTime": "2017-03-04T07:09:54Z"
 		},
 		{
-			"path": "github.com/moby/docker/docker/types",
+			"path": "github.com/hashicorp/go-cleanhttp",
 			"revision": ""
 		},
 		{
-			"checksumSHA1": "UE6Ee/plYbXy7qQunQmy70k145s=",
-			"path": "github.com/moby/moby/api/types",
-			"revision": "815e8bb885c3d9f70ab763d9844e857590b40ad3",
-			"revisionTime": "2017-05-10T10:21:28Z"
+			"path": "github.com/moby/docker/docker/types",
+			"revision": ""
 		},
 		{
 			"checksumSHA1": "qj7IAU2RRq99oaIEGH0eLfX/UcM=",
 			"path": "github.com/opencontainers/go-digest",
 			"revision": "aa2ec055abd10d26d539eb630a92241b781ce4bc",
 			"revisionTime": "2017-01-31T01:35:07Z"
+		},
+		{
+			"path": "github.com/opencontainers/runc/libcontainer/system",
+			"revision": ""
+		},
+		{
+			"checksumSHA1": "/PJutIUkV4HNUeZ6vbZLgv3cdr0=",
+			"path": "github.com/opencontainers/runc/libcontainer/user",
+			"revision": "7139b61f7fdb904d0acb8db825709aa8d2d2ef36",
+			"revisionTime": "2017-06-30T15:08:21Z"
 		},
 		{
 			"checksumSHA1": "ynJSWoF6v+3zMnh9R0QmmG6iGV8=",
