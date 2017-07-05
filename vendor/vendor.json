@@ -63,10 +63,10 @@
 			"revisionTime": "2017-04-29T17:05:32Z"
 		},
 		{
-			"checksumSHA1": "XRM8n6GhEuZMchTMF+LmzVzMMlE=",
+			"checksumSHA1": "xvSa+kz+sCPBTlSLqARaBgniqjE=",
 			"path": "github.com/docker/docker/api/types",
-			"revision": "815e8bb885c3d9f70ab763d9844e857590b40ad3",
-			"revisionTime": "2017-05-10T10:21:28Z"
+			"revision": "82c2a08b6018586f3c8f35405c3bd6fce3c78ccd",
+			"revisionTime": "2017-07-04T14:12:39Z"
 		},
 		{
 			"checksumSHA1": "jVJDbe0IcyjoKc2xbohwzQr+FF0=",
