@@ -486,6 +486,13 @@ func Chmod(path string, mode uint32) (err error) {
 	return SetFileAttributes(p, attrs)
 }
 
+<<<<<<< HEAD
+=======
+func LoadGetSystemTimePreciseAsFileTime() error {
+	return procGetSystemTimePreciseAsFileTime.Find()
+}
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 func LoadCancelIoEx() error {
 	return procCancelIoEx.Find()
 }

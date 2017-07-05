@@ -37,7 +37,11 @@ const (
 
 	// Maximum allowed depth when recursively substituing variable names.
 	_DEPTH_VALUES = 99
+<<<<<<< HEAD
 	_VERSION      = "1.27.0"
+=======
+	_VERSION      = "1.28.1"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // Version returns current package version literal.
@@ -60,6 +64,12 @@ var (
 
 	// Explicitly write DEFAULT section header
 	DefaultHeader = false
+<<<<<<< HEAD
+=======
+
+	// Indicate whether to put a line between sections
+	PrettySection = true
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 func init() {
@@ -504,7 +514,11 @@ func (f *File) WriteToIndent(w io.Writer, indent string) (n int64, err error) {
 				// In case key value contains "\n", "`", "\"", "#" or ";"
 				if strings.ContainsAny(val, "\n`") {
 					val = `"""` + val + `"""`
+<<<<<<< HEAD
 				} else if strings.ContainsAny(val, "#;") {
+=======
+				} else if !f.options.IgnoreInlineComment && strings.ContainsAny(val, "#;") {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 					val = "`" + val + "`"
 				}
 				if _, err = buf.WriteString(equalSign + val + LineBreak); err != nil {
@@ -513,9 +527,17 @@ func (f *File) WriteToIndent(w io.Writer, indent string) (n int64, err error) {
 			}
 		}
 
+<<<<<<< HEAD
 		// Put a line between sections
 		if _, err = buf.WriteString(LineBreak); err != nil {
 			return 0, err
+=======
+		if PrettySection {
+			// Put a line between sections
+			if _, err = buf.WriteString(LineBreak); err != nil {
+				return 0, err
+			}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		}
 	}
 

@@ -6,7 +6,12 @@ environment:
   GOPATH: c:\gopath
   matrix:
     - GOVERSION: 1.7.5
+<<<<<<< HEAD
     - GOVERSION: 1.8.1
+=======
+    - GOVERSION: 1.8.3
+    - GOVERSION: 1.9beta2
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 install:
   - set PATH=%GOPATH%\bin;c:\go\bin;%PATH%
   - rmdir c:\go /s /q

@@ -15,7 +15,11 @@
 //	tag                             := /[\w][\w.-]{0,127}/
 //
 //	digest                          := digest-algorithm ":" digest-hex
+<<<<<<< HEAD
 //	digest-algorithm                := digest-algorithm-component [ digest-algorithm-separator digest-algorithm-component ]
+=======
+//	digest-algorithm                := digest-algorithm-component [ digest-algorithm-separator digest-algorithm-component ]*
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 //	digest-algorithm-separator      := /[+.-_]/
 //	digest-algorithm-component      := /[A-Za-z][A-Za-z0-9]*/
 //	digest-hex                      := /[0-9a-fA-F]{32,}/ ; At least 128 bit digest value

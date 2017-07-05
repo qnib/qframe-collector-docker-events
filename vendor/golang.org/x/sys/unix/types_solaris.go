@@ -37,6 +37,10 @@ package unix
 #include <sys/signal.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
+<<<<<<< HEAD
+=======
+#include <sys/statvfs.h>
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 #include <sys/time.h>
 #include <sys/times.h>
 #include <sys/types.h>
@@ -139,6 +143,15 @@ type Flock_t C.struct_flock
 
 type Dirent C.struct_dirent
 
+<<<<<<< HEAD
+=======
+// Filesystems
+
+type _Fsblkcnt_t C.fsblkcnt_t
+
+type Statvfs_t C.struct_statvfs
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // Sockets
 
 type RawSockaddrInet4 C.struct_sockaddr_in

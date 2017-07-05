@@ -1,26 +1,26 @@
 package main
 
 import (
-	"log"
 	"fmt"
-	"time"
 	"golang.org/x/net/context"
+	"log"
+	"time"
 
-	"github.com/docker/docker/client"
 	dt "github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/client"
 	"github.com/zpatrick/go-config"
 
-	"github.com/qnib/qframe-types"
 	"github.com/qnib/qframe-collector-docker-events/lib"
+	"github.com/qnib/qframe-types"
 )
 
 const (
 	dockerHost = "unix:///var/run/docker.sock"
-	dockerAPI = "v1.29"
+	dockerAPI  = "v1.29"
 )
 
-func Run(qChan qtypes.QChan, cfg config.Config, name string) {
+func Run(qChan qtypes.QChan, cfg *config.Config, name string) {
 	p, _ := qframe_collector_docker_events.New(qChan, cfg, name)
 	p.Run()
 }
@@ -33,7 +33,7 @@ func hConfig() (config *container.HostConfig) {
 	return &container.HostConfig{AutoRemove: true}
 }
 func startCnt(cli *client.Client, name string) {
-	time.Sleep(2*time.Second)
+	time.Sleep(2 * time.Second)
 	// Start container
 	create, err := cli.ContainerCreate(context.Background(), initConfig(), hConfig(), nil, name)
 	if err != nil {
@@ -62,7 +62,7 @@ func main() {
 	if err != nil {
 		log.Println("Could not connect to /var/run/docker.sock")
 	}
-	p, err := qframe_collector_docker_events.New(qChan, *cfg, "docker-events")
+	p, err := qframe_collector_docker_events.New(qChan, cfg, "docker-events")
 	if err != nil {
 		log.Printf("[EE] Failed to create collector: %v", err)
 		return
@@ -76,7 +76,7 @@ func main() {
 	doStop := false
 	for {
 		select {
-		case msg := <- dc.Read:
+		case msg := <-dc.Read:
 			switch msg.(type) {
 			case qtypes.QMsg:
 				qm := msg.(qtypes.QMsg)

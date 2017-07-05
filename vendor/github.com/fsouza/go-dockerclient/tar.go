@@ -13,8 +13,13 @@ import (
 	"path/filepath"
 	"strings"
 
+<<<<<<< HEAD
 	"github.com/moby/moby/pkg/archive"
 	"github.com/moby/moby/pkg/fileutils"
+=======
+	"github.com/docker/docker/pkg/archive"
+	"github.com/docker/docker/pkg/fileutils"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 func createTarStream(srcPath, dockerfilePath string) (io.ReadCloser, error) {
@@ -32,7 +37,11 @@ func createTarStream(srcPath, dockerfilePath string) (io.ReadCloser, error) {
 	// removed.  The deamon will remove them for us, if needed, after it
 	// parses the Dockerfile.
 	//
+<<<<<<< HEAD
 	// https://github.com/moby/moby/issues/8330
+=======
+	// https://github.com/docker/docker/issues/8330
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	//
 	forceIncludeFiles := []string{".dockerignore", dockerfilePath}
 

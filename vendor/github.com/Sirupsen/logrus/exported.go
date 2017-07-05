@@ -31,14 +31,22 @@ func SetFormatter(formatter Formatter) {
 func SetLevel(level Level) {
 	std.mu.Lock()
 	defer std.mu.Unlock()
+<<<<<<< HEAD
 	std.Level = level
+=======
+	std.setLevel(level)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // GetLevel returns the standard logger level.
 func GetLevel() Level {
 	std.mu.Lock()
 	defer std.mu.Unlock()
+<<<<<<< HEAD
 	return std.Level
+=======
+	return std.level()
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // AddHook adds a hook to the standard logger hooks.

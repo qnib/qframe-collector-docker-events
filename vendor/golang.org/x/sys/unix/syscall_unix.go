@@ -23,6 +23,10 @@ const (
 	darwin64Bit    = runtime.GOOS == "darwin" && sizeofPtr == 8
 	dragonfly64Bit = runtime.GOOS == "dragonfly" && sizeofPtr == 8
 	netbsd32Bit    = runtime.GOOS == "netbsd" && sizeofPtr == 4
+<<<<<<< HEAD
+=======
+	solaris64Bit   = runtime.GOOS == "solaris" && sizeofPtr == 8
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // Do the interface allocations only once for common

@@ -6,6 +6,10 @@ package docker
 
 import (
 	"encoding/json"
+<<<<<<< HEAD
+=======
+	"errors"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"fmt"
 	"io"
 	"net/http"
@@ -29,6 +33,10 @@ type CreateExecOptions struct {
 	AttachStdout bool            `json:"AttachStdout,omitempty" yaml:"AttachStdout,omitempty" toml:"AttachStdout,omitempty"`
 	AttachStderr bool            `json:"AttachStderr,omitempty" yaml:"AttachStderr,omitempty" toml:"AttachStderr,omitempty"`
 	Tty          bool            `json:"Tty,omitempty" yaml:"Tty,omitempty" toml:"Tty,omitempty"`
+<<<<<<< HEAD
+=======
+	Env          []string        `json:"Env,omitempty" yaml:"Env,omitempty" toml:"Env,omitempty"`
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	Cmd          []string        `json:"Cmd,omitempty" yaml:"Cmd,omitempty" toml:"Cmd,omitempty"`
 	Container    string          `json:"Container,omitempty" yaml:"Container,omitempty" toml:"Container,omitempty"`
 	User         string          `json:"User,omitempty" yaml:"User,omitempty" toml:"User,omitempty"`
@@ -41,6 +49,12 @@ type CreateExecOptions struct {
 //
 // See https://goo.gl/60TeBP for more details
 func (c *Client) CreateExec(opts CreateExecOptions) (*Exec, error) {
+<<<<<<< HEAD
+=======
+	if len(opts.Env) > 0 && c.serverAPIVersion.LessThan(apiVersion125) {
+		return nil, errors.New("exec configuration Env is only supported in API#1.25 and above")
+	}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	path := fmt.Sprintf("/containers/%s/exec", opts.Container)
 	resp, err := c.do("POST", path, doOptions{data: opts, context: opts.Context})
 	if err != nil {

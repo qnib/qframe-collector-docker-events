@@ -10,7 +10,12 @@ import (
 	"io"
 	"os"
 	"os/signal"
+<<<<<<< HEAD
 	"syscall"
+=======
+
+	"golang.org/x/sys/unix"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 var (
@@ -79,7 +84,11 @@ func SaveState(fd uintptr) (*State, error) {
 // descriptor, with echo disabled.
 func DisableEcho(fd uintptr, state *State) error {
 	newState := state.termios
+<<<<<<< HEAD
 	newState.Lflag &^= syscall.ECHO
+=======
+	newState.Lflag &^= unix.ECHO
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	if err := tcset(fd, &newState); err != 0 {
 		return err

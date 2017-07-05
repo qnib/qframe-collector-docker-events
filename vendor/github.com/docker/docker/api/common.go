@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
+<<<<<<< HEAD
 	"mime"
 	"os"
 	"path/filepath"
@@ -13,6 +14,11 @@ import (
 
 	"github.com/Sirupsen/logrus"
 	"github.com/docker/docker/api/types"
+=======
+	"os"
+	"path/filepath"
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"github.com/docker/docker/pkg/ioutils"
 	"github.com/docker/docker/pkg/system"
 	"github.com/docker/libtrust"
@@ -21,13 +27,18 @@ import (
 // Common constants for daemon and client.
 const (
 	// DefaultVersion of Current REST API
+<<<<<<< HEAD
 	DefaultVersion string = "1.30"
+=======
+	DefaultVersion string = "1.31"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	// NoBaseImageSpecifier is the symbol used by the FROM
 	// command to specify that no base image is to be used.
 	NoBaseImageSpecifier string = "scratch"
 )
 
+<<<<<<< HEAD
 // byPortInfo is a temporary type used to sort types.Port by its fields
 type byPortInfo []types.Port
 
@@ -127,6 +138,12 @@ func MatchesContentType(contentType, expectedType string) bool {
 // otherwise generates a new one
 func LoadOrCreateTrustKey(trustKeyPath string) (libtrust.PrivateKey, error) {
 	err := system.MkdirAll(filepath.Dir(trustKeyPath), 0700)
+=======
+// LoadOrCreateTrustKey attempts to load the libtrust key at the given path,
+// otherwise generates a new one
+func LoadOrCreateTrustKey(trustKeyPath string) (libtrust.PrivateKey, error) {
+	err := system.MkdirAll(filepath.Dir(trustKeyPath), 0700, "")
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	if err != nil {
 		return nil, err
 	}

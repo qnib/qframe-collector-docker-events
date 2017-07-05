@@ -1,6 +1,10 @@
 // +build windows
 
+<<<<<<< HEAD
 package windows
+=======
+package windowsconsole
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 import (
 	"bytes"

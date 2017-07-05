@@ -58,6 +58,10 @@ type EndpointSettings struct {
 	GlobalIPv6Address   string
 	GlobalIPv6PrefixLen int
 	MacAddress          string
+<<<<<<< HEAD
+=======
+	DriverOpts          map[string]string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // Task carries the information about one backend task
@@ -100,3 +104,11 @@ func (es *EndpointSettings) Copy() *EndpointSettings {
 type NetworkingConfig struct {
 	EndpointsConfig map[string]*EndpointSettings // Endpoint configs for each connecting network
 }
+<<<<<<< HEAD
+=======
+
+// ConfigReference specifies the source which provides a network's configuration
+type ConfigReference struct {
+	Network string
+}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2

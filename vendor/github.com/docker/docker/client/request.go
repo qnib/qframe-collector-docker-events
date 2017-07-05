@@ -24,6 +24,10 @@ type serverResponse struct {
 	body       io.ReadCloser
 	header     http.Header
 	statusCode int
+<<<<<<< HEAD
+=======
+	reqURL     *url.URL
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // head sends an http request to the docker API using the method HEAD.
@@ -118,11 +122,26 @@ func (cli *Client) sendRequest(ctx context.Context, method, path string, query u
 	if err != nil {
 		return serverResponse{}, err
 	}
+<<<<<<< HEAD
 	return cli.doRequest(ctx, req)
 }
 
 func (cli *Client) doRequest(ctx context.Context, req *http.Request) (serverResponse, error) {
 	serverResp := serverResponse{statusCode: -1}
+=======
+	resp, err := cli.doRequest(ctx, req)
+	if err != nil {
+		return resp, err
+	}
+	if err := cli.checkResponseErr(resp); err != nil {
+		return resp, err
+	}
+	return resp, nil
+}
+
+func (cli *Client) doRequest(ctx context.Context, req *http.Request) (serverResponse, error) {
+	serverResp := serverResponse{statusCode: -1, reqURL: req.URL}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	resp, err := ctxhttp.Do(ctx, cli.client, req)
 	if err != nil {
@@ -179,6 +198,7 @@ func (cli *Client) doRequest(ctx context.Context, req *http.Request) (serverResp
 
 	if resp != nil {
 		serverResp.statusCode = resp.StatusCode
+<<<<<<< HEAD
 	}
 
 	if serverResp.statusCode < 200 || serverResp.statusCode >= 400 {
@@ -208,6 +228,44 @@ func (cli *Client) doRequest(ctx context.Context, req *http.Request) (serverResp
 	serverResp.body = resp.Body
 	serverResp.header = resp.Header
 	return serverResp, nil
+=======
+		serverResp.body = resp.Body
+		serverResp.header = resp.Header
+	}
+	return serverResp, nil
+}
+
+func (cli *Client) checkResponseErr(serverResp serverResponse) error {
+	if serverResp.statusCode >= 200 && serverResp.statusCode < 400 {
+		return nil
+	}
+
+	body, err := ioutil.ReadAll(serverResp.body)
+	if err != nil {
+		return err
+	}
+	if len(body) == 0 {
+		return fmt.Errorf("Error: request returned %s for API route and version %s, check if the server supports the requested API version", http.StatusText(serverResp.statusCode), serverResp.reqURL)
+	}
+
+	var ct string
+	if serverResp.header != nil {
+		ct = serverResp.header.Get("Content-Type")
+	}
+
+	var errorMessage string
+	if (cli.version == "" || versions.GreaterThan(cli.version, "1.23")) && ct == "application/json" {
+		var errorResponse types.ErrorResponse
+		if err := json.Unmarshal(body, &errorResponse); err != nil {
+			return fmt.Errorf("Error reading JSON: %v", err)
+		}
+		errorMessage = errorResponse.Message
+	} else {
+		errorMessage = string(body)
+	}
+
+	return fmt.Errorf("Error response from daemon: %s", strings.TrimSpace(errorMessage))
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 func (cli *Client) addHeaders(req *http.Request, headers headers) *http.Request {
@@ -239,9 +297,15 @@ func encodeData(data interface{}) (*bytes.Buffer, error) {
 }
 
 func ensureReaderClosed(response serverResponse) {
+<<<<<<< HEAD
 	if body := response.body; body != nil {
 		// Drain up to 512 bytes and close the body to let the Transport reuse the connection
 		io.CopyN(ioutil.Discard, body, 512)
+=======
+	if response.body != nil {
+		// Drain up to 512 bytes and close the body to let the Transport reuse the connection
+		io.CopyN(ioutil.Discard, response.body, 512)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		response.body.Close()
 	}
 }

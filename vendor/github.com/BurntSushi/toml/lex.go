@@ -775,7 +775,11 @@ func lexDatetime(lx *lexer) stateFn {
 		return lexDatetime
 	}
 	switch r {
+<<<<<<< HEAD
 	case '-', 'T', ':', '.', 'Z':
+=======
+	case '-', 'T', ':', '.', 'Z', '+':
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return lexDatetime
 	}
 

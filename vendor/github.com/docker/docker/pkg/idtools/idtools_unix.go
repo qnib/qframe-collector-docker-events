@@ -49,7 +49,11 @@ func mkdirAs(path string, mode os.FileMode, ownerUID, ownerGID int, mkAll, chown
 				paths = append(paths, dirPath)
 			}
 		}
+<<<<<<< HEAD
 		if err := system.MkdirAll(path, mode); err != nil && !os.IsExist(err) {
+=======
+		if err := system.MkdirAll(path, mode, ""); err != nil && !os.IsExist(err) {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			return err
 		}
 	} else {
@@ -69,15 +73,24 @@ func mkdirAs(path string, mode os.FileMode, ownerUID, ownerGID int, mkAll, chown
 
 // CanAccess takes a valid (existing) directory and a uid, gid pair and determines
 // if that uid, gid pair has access (execute bit) to the directory
+<<<<<<< HEAD
 func CanAccess(path string, uid, gid int) bool {
+=======
+func CanAccess(path string, pair IDPair) bool {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	statInfo, err := system.Stat(path)
 	if err != nil {
 		return false
 	}
 	fileMode := os.FileMode(statInfo.Mode())
 	permBits := fileMode.Perm()
+<<<<<<< HEAD
 	return accessible(statInfo.UID() == uint32(uid),
 		statInfo.GID() == uint32(gid), permBits)
+=======
+	return accessible(statInfo.UID() == uint32(pair.UID),
+		statInfo.GID() == uint32(pair.GID), permBits)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 func accessible(isOwner, isGroup bool, perms os.FileMode) bool {

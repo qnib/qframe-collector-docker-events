@@ -7,7 +7,13 @@ import "time"
 type ClusterInfo struct {
 	ID string
 	Meta
+<<<<<<< HEAD
 	Spec Spec
+=======
+	Spec                   Spec
+	TLSInfo                TLSInfo
+	RootRotationInProgress bool
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // Swarm represents a swarm.
@@ -107,6 +113,19 @@ type CAConfig struct {
 	// ExternalCAs is a list of CAs to which a manager node will make
 	// certificate signing requests for node certificates.
 	ExternalCAs []*ExternalCA `json:",omitempty"`
+<<<<<<< HEAD
+=======
+
+	// SigningCACert and SigningCAKey specify the desired signing root CA and
+	// root CA key for the swarm.  When inspecting the cluster, the key will
+	// be redacted.
+	SigningCACert string `json:",omitempty"`
+	SigningCAKey  string `json:",omitempty"`
+
+	// If this value changes, and there is no specified signing cert and key,
+	// then the swarm is forced to generate a new root certificate ane key.
+	ForceRotate uint64 `json:",omitempty"`
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // ExternalCAProtocol represents type of external CA.
@@ -126,12 +145,23 @@ type ExternalCA struct {
 	// Options is a set of additional key/value pairs whose interpretation
 	// depends on the specified CA type.
 	Options map[string]string `json:",omitempty"`
+<<<<<<< HEAD
+=======
+
+	// CACert specifies which root CA is used by this external CA.  This certificate must
+	// be in PEM format.
+	CACert string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // InitRequest is the request used to init a swarm.
 type InitRequest struct {
 	ListenAddr       string
 	AdvertiseAddr    string
+<<<<<<< HEAD
+=======
+	DataPathAddr     string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	ForceNewCluster  bool
 	Spec             Spec
 	AutoLockManagers bool
@@ -142,6 +172,10 @@ type InitRequest struct {
 type JoinRequest struct {
 	ListenAddr    string
 	AdvertiseAddr string
+<<<<<<< HEAD
+=======
+	DataPathAddr  string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	RemoteAddrs   []string
 	JoinToken     string // accept by secret
 	Availability  NodeAvailability

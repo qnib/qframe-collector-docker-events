@@ -46,6 +46,10 @@ For example, to list running containers (the equivalent of "docker ps"):
 package client
 
 import (
+<<<<<<< HEAD
+=======
+	"errors"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"fmt"
 	"net/http"
 	"net/url"
@@ -54,10 +58,23 @@ import (
 	"strings"
 
 	"github.com/docker/docker/api"
+<<<<<<< HEAD
 	"github.com/docker/go-connections/sockets"
 	"github.com/docker/go-connections/tlsconfig"
 )
 
+=======
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/versions"
+	"github.com/docker/go-connections/sockets"
+	"github.com/docker/go-connections/tlsconfig"
+	"golang.org/x/net/context"
+)
+
+// ErrRedirect is the error returned by checkRedirect when the request is non-GET.
+var ErrRedirect = errors.New("unexpected redirect in response")
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // Client is the API client that performs all operations
 // against a docker server.
 type Client struct {
@@ -81,6 +98,26 @@ type Client struct {
 	manualOverride bool
 }
 
+<<<<<<< HEAD
+=======
+// CheckRedirect specifies the policy for dealing with redirect responses:
+// If the request is non-GET return `ErrRedirect`. Otherwise use the last response.
+//
+// Go 1.8 changes behavior for HTTP redirects (specificlaly 301, 307, and 308) in the client .
+// The Docker client (and by extension docker API client) can be made to to send a request
+// like POST /containers//start where what would normally be in the name section of the URL is empty.
+// This triggers an HTTP 301 from the daemon.
+// In go 1.8 this 301 will be converted to a GET request, and ends up getting a 404 from the daemon.
+// This behavior change manifests in the client in that before the 301 was not followed and
+// the client did not generate an error, but now results in a message like Error response from daemon: page not found.
+func CheckRedirect(req *http.Request, via []*http.Request) error {
+	if via[0].Method == http.MethodGet {
+		return http.ErrUseLastResponse
+	}
+	return ErrRedirect
+}
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // NewEnvClient initializes a new API client based on environment variables.
 // Use DOCKER_HOST to set the url to the docker server.
 // Use DOCKER_API_VERSION to set the version of the API to reach, leave empty for latest.
@@ -104,6 +141,10 @@ func NewEnvClient() (*Client, error) {
 			Transport: &http.Transport{
 				TLSClientConfig: tlsc,
 			},
+<<<<<<< HEAD
+=======
+			CheckRedirect: CheckRedirect,
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		}
 	}
 
@@ -147,7 +188,12 @@ func NewClient(host string, version string, client *http.Client, httpHeaders map
 		transport := new(http.Transport)
 		sockets.ConfigureTransport(transport, proto, addr)
 		client = &http.Client{
+<<<<<<< HEAD
 			Transport: transport,
+=======
+			Transport:     transport,
+			CheckRedirect: CheckRedirect,
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		}
 	}
 
@@ -193,9 +239,15 @@ func (cli *Client) getAPIPath(p string, query url.Values) string {
 	var apiPath string
 	if cli.version != "" {
 		v := strings.TrimPrefix(cli.version, "v")
+<<<<<<< HEAD
 		apiPath = fmt.Sprintf("%s/v%s%s", cli.basePath, v, p)
 	} else {
 		apiPath = fmt.Sprintf("%s%s", cli.basePath, p)
+=======
+		apiPath = cli.basePath + "/v" + v + p
+	} else {
+		apiPath = cli.basePath + p
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	}
 
 	u := &url.URL{
@@ -215,6 +267,7 @@ func (cli *Client) ClientVersion() string {
 	return cli.version
 }
 
+<<<<<<< HEAD
 // UpdateClientVersion updates the version string associated with this
 // instance of the Client. This operation doesn't acquire a mutex.
 func (cli *Client) UpdateClientVersion(v string) {
@@ -222,6 +275,37 @@ func (cli *Client) UpdateClientVersion(v string) {
 		cli.version = v
 	}
 
+=======
+// NegotiateAPIVersion updates the version string associated with this
+// instance of the Client to match the latest version the server supports
+func (cli *Client) NegotiateAPIVersion(ctx context.Context) {
+	ping, _ := cli.Ping(ctx)
+	cli.NegotiateAPIVersionPing(ping)
+}
+
+// NegotiateAPIVersionPing updates the version string associated with this
+// instance of the Client to match the latest version the server supports
+func (cli *Client) NegotiateAPIVersionPing(p types.Ping) {
+	if cli.manualOverride {
+		return
+	}
+
+	// try the latest version before versioning headers existed
+	if p.APIVersion == "" {
+		p.APIVersion = "1.24"
+	}
+
+	// if server version is lower than the current cli, downgrade
+	if versions.LessThan(p.APIVersion, cli.ClientVersion()) {
+		cli.version = p.APIVersion
+	}
+}
+
+// DaemonHost returns the host associated with this instance of the Client.
+// This operation doesn't acquire a mutex.
+func (cli *Client) DaemonHost() string {
+	return cli.host
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // ParseHost verifies that the given host strings is valid.

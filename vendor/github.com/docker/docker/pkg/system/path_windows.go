@@ -8,10 +8,13 @@ import (
 	"strings"
 )
 
+<<<<<<< HEAD
 // DefaultPathEnv is deliberately empty on Windows as the default path will be set by
 // the container. Docker has no context of what the default path should be.
 const DefaultPathEnv = ""
 
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // CheckSystemDriveAndRemoveDriveLetter verifies and manipulates a Windows path.
 // This is used, for example, when validating a user provided path in docker cp.
 // If a drive letter is supplied, it must be the system drive. The drive letter

@@ -19,10 +19,17 @@ produces:
 consumes:
   - "application/json"
   - "text/plain"
+<<<<<<< HEAD
 basePath: "/v1.30"
 info:
   title: "Docker Engine API"
   version: "1.30"
+=======
+basePath: "/v1.31"
+info:
+  title: "Docker Engine API"
+  version: "1.31"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
   x-logo:
     url: "https://docs.docker.com/images/logo-docker-main.png"
   description: |
@@ -52,10 +59,18 @@ info:
 
     The API uses an open schema model, which means server may add extra properties to responses. Likewise, the server will ignore any extra query parameters and request body properties. When you write clients, you need to ignore additional properties in responses to ensure they do not break when talking to newer Docker daemons.
 
+<<<<<<< HEAD
     This documentation is for version 1.30 of the API, which was introduced with Docker 17.06. Use this table to find documentation for previous versions of the API:
 
     Docker version  | API version | Changes
     ----------------|-------------|---------
+=======
+    This documentation is for version 1.31 of the API. Use this table to find documentation for previous versions of the API:
+
+    Docker version  | API version | Changes
+    ----------------|-------------|---------
+    17.06.x | [1.30](https://docs.docker.com/engine/api/v1.30/) | [API changes](https://docs.docker.com/engine/api/version-history/#v1-30-api-changes)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
     17.05.x | [1.29](https://docs.docker.com/engine/api/v1.29/) | [API changes](https://docs.docker.com/engine/api/version-history/#v1-29-api-changes)
     17.04.x | [1.28](https://docs.docker.com/engine/api/v1.28/) | [API changes](https://docs.docker.com/engine/api/version-history/#v1-28-api-changes)
     17.03.1 | [1.27](https://docs.docker.com/engine/api/v1.27/) | [API changes](https://docs.docker.com/engine/api/version-history/#v1-27-api-changes)
@@ -231,6 +246,10 @@ definitions:
         type: "string"
       Source:
         description: "Mount source (e.g. a volume name, a host path)."
+<<<<<<< HEAD
+=======
+        type: "string"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       Type:
         description: |
           The mount type. Available types:
@@ -308,10 +327,18 @@ definitions:
       Name:
         type: "string"
         description: |
+<<<<<<< HEAD
+=======
+          - Empty string means not to restart
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
           - `always` Always restart
           - `unless-stopped` Restart always except when the user has manually stopped the container
           - `on-failure` Restart only when the container exit code is non-zero
         enum:
+<<<<<<< HEAD
+=======
+          - ""
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
           - "always"
           - "unless-stopped"
           - "on-failure"
@@ -499,16 +526,27 @@ definitions:
         items:
           type: "string"
       Interval:
+<<<<<<< HEAD
         description: "The time to wait between checks in nanoseconds. It should be 0 or not less than 1000000000(1s). 0 means inherit."
         type: "integer"
       Timeout:
         description: "The time to wait before considering the check to have hung. It should be 0 or not less than 1000000000(1s). 0 means inherit."
+=======
+        description: "The time to wait between checks in nanoseconds. It should be 0 or at least 1000000 (1 ms). 0 means inherit."
+        type: "integer"
+      Timeout:
+        description: "The time to wait before considering the check to have hung. It should be 0 or at least 1000000 (1 ms). 0 means inherit."
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
         type: "integer"
       Retries:
         description: "The number of consecutive failures needed to consider a container as unhealthy. 0 means inherit."
         type: "integer"
       StartPeriod:
+<<<<<<< HEAD
         description: "Start period for the container to initialize before starting health-retries countdown in nanoseconds. 0 means inherit."
+=======
+        description: "Start period for the container to initialize before starting health-retries countdown in nanoseconds. It should be 0 or at least 1000000 (1 ms). 0 means inherit."
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
         type: "integer"
 
   HostConfig:
@@ -945,6 +983,15 @@ definitions:
               type: "string"
           BaseLayer:
             type: "string"
+<<<<<<< HEAD
+=======
+      Metadata:
+        type: "object"
+        properties:
+          LastTagTime:
+            type: "string"
+            format: "dateTime"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
   ImageSummary:
     type: "object"
@@ -1045,6 +1092,13 @@ definitions:
         type: "string"
         description: "Mount path of the volume on the host."
         x-nullable: false
+<<<<<<< HEAD
+=======
+      CreatedAt:
+        type: "string"
+        format: "dateTime"
+        description: "Time volume was created."
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       Status:
         type: "object"
         description: |
@@ -1098,6 +1152,10 @@ definitions:
         com.example.some-label: "some-value"
         com.example.some-other-label: "some-other-value"
       Scope: "local"
+<<<<<<< HEAD
+=======
+      CreatedAt: "2016-06-07T20:31:11.853781916Z"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
   Network:
     type: "object"
@@ -1193,6 +1251,11 @@ definitions:
   NetworkContainer:
     type: "object"
     properties:
+<<<<<<< HEAD
+=======
+      Name:
+        type: "string"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       EndpointID:
         type: "string"
       MacAddress:
@@ -1711,6 +1774,11 @@ definitions:
                       type: "string"
                     Name:
                       type: "string"
+<<<<<<< HEAD
+=======
+          TLSInfo:
+            $ref: "#/definitions/SwarmSpec"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
     example:
       ID: "24ifsmvkjbyhk"
       Version:
@@ -1751,6 +1819,50 @@ definitions:
         Leader: true
         Reachability: "reachable"
         Addr: "172.17.0.2:2377"
+<<<<<<< HEAD
+=======
+      TLSInfo:
+        TrustRoot: |
+          -----BEGIN CERTIFICATE-----
+          MIIBajCCARCgAwIBAgIUbYqrLSOSQHoxD8CwG6Bi2PJi9c8wCgYIKoZIzj0EAwIw
+          EzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMTcwNDI0MjE0MzAwWhcNMzcwNDE5MjE0
+          MzAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH
+          A0IABJk/VyMPYdaqDXJb/VXh5n/1Yuv7iNrxV3Qb3l06XD46seovcDWs3IZNV1lf
+          3Skyr0ofcchipoiHkXBODojJydSjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+          Af8EBTADAQH/MB0GA1UdDgQWBBRUXxuRcnFjDfR/RIAUQab8ZV/n4jAKBggqhkjO
+          PQQDAgNIADBFAiAy+JTe6Uc3KyLCMiqGl2GyWGQqQDEcO3/YG36x7om65AIhAJvz
+          pxv6zFeVEkAEEkqIYi0omA9+CjanB/6Bz4n1uw8H
+          -----END CERTIFICATE-----
+        CertIssuerSubject: "MBMxETAPBgNVBAMTCHN3YXJtLWNh"
+        CertIssuerPublicKey: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmT9XIw9h1qoNclv9VeHmf/Vi6/uI2vFXdBveXTpcPjqx6i9wNazchk1XWV/dKTKvSh9xyGKmiIeRcE4OiMnJ1A=="
+  TLSInfo:
+    description: "Information about the issuer of leaf TLS certificates and the trusted root CA certificate"
+    type: "object"
+    properties:
+      TrustRoot:
+        description: "The root CA certificate(s) that are used to validate leaf TLS certificates"
+        type: "string"
+      CertIssuerSubject:
+        description: "The base64-url-safe-encoded raw subject bytes of the issuer"
+        type: "string"
+      CertIssuerPublicKey:
+        description: "The base64-url-safe-encoded raw public key bytes of the issuer"
+        type: "string"
+    example:
+      TrustRoot: |
+        -----BEGIN CERTIFICATE-----
+        MIIBajCCARCgAwIBAgIUbYqrLSOSQHoxD8CwG6Bi2PJi9c8wCgYIKoZIzj0EAwIw
+        EzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMTcwNDI0MjE0MzAwWhcNMzcwNDE5MjE0
+        MzAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH
+        A0IABJk/VyMPYdaqDXJb/VXh5n/1Yuv7iNrxV3Qb3l06XD46seovcDWs3IZNV1lf
+        3Skyr0ofcchipoiHkXBODojJydSjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+        Af8EBTADAQH/MB0GA1UdDgQWBBRUXxuRcnFjDfR/RIAUQab8ZV/n4jAKBggqhkjO
+        PQQDAgNIADBFAiAy+JTe6Uc3KyLCMiqGl2GyWGQqQDEcO3/YG36x7om65AIhAJvz
+        pxv6zFeVEkAEEkqIYi0omA9+CjanB/6Bz4n1uw8H
+        -----END CERTIFICATE-----
+      CertIssuerSubject: "MBMxETAPBgNVBAMTCHN3YXJtLWNh"
+      CertIssuerPublicKey: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmT9XIw9h1qoNclv9VeHmf/Vi6/uI2vFXdBveXTpcPjqx6i9wNazchk1XWV/dKTKvSh9xyGKmiIeRcE4OiMnJ1A=="
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
   SwarmSpec:
     description: "User modifiable swarm configuration."
     type: "object"
@@ -1835,6 +1947,20 @@ definitions:
                   type: "object"
                   additionalProperties:
                     type: "string"
+<<<<<<< HEAD
+=======
+                CACert:
+                  description: "The root CA certificate (in PEM format) this external CA uses to issue TLS certificates (assumed to be to the current swarm root CA certificate if not provided)."
+                  type: "string"
+          SigningCACert:
+            description: "The desired signing CA certificate for all swarm node TLS leaf certificates, in PEM format."
+            type: "string"
+          SigningCAKey:
+            description: "The desired signing CA key for all swarm node TLS leaf certificates, in PEM format."
+            type: "string"
+          ForceRotate:
+            description: "An integer whose purpose is to force swarm to generate a new signing CA certificate and key, if none have been specified in `SigningCACert` and `SigningCAKey`"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       EncryptionConfig:
         description: "Parameters related to encryption-at-rest."
         type: "object"
@@ -1895,6 +2021,14 @@ definitions:
         format: "dateTime"
       Spec:
         $ref: "#/definitions/SwarmSpec"
+<<<<<<< HEAD
+=======
+      TLSInfo:
+        $ref: "#/definitions/TLSInfo"
+      RootRotationInProgress:
+        description: "Whether there is currently a root CA rotation in progress for the swarm"
+        type: "boolean"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
   TaskSpec:
     description: "User modifiable task configuration."
     type: "object"
@@ -2094,15 +2228,31 @@ definitions:
                     SpreadDescriptor:
                       description: "label descriptor, such as engine.labels.az"
                       type: "string"
+<<<<<<< HEAD
+=======
+          Platforms:
+            description: "An array of supported platforms."
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                Architecture:
+                  type: "string"
+                OS:
+                  type: "string"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       ForceUpdate:
         description: "A counter that triggers an update even if no relevant parameters have been changed."
         type: "integer"
       Runtime:
         description: "Runtime is the type of runtime specified for the task executor."
         type: "string"
+<<<<<<< HEAD
       RuntimeData:
         description: "RuntimeData is the payload sent to be used with the runtime for the executor."
         type: "array"
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       Networks:
         type: "array"
         items:
@@ -2622,6 +2772,14 @@ paths:
   /containers/json:
     get:
       summary: "List containers"
+<<<<<<< HEAD
+=======
+      description: |
+        Returns a list of containers. For details on the format, see [the inspect endpoint](#operation/ContainerInspect).
+
+        Note that it uses a different, smaller representation of a container than inspecting a single container. For example,
+        the list of linked containers is not propagated .
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       operationId: "ContainerList"
       produces:
         - "application/json"
@@ -3033,10 +3191,29 @@ paths:
                 type: "object"
                 properties:
                   Status:
+<<<<<<< HEAD
                     description: "The status of the container. For example, `running` or `exited`."
                     type: "string"
                   Running:
                     description: "Whether this container is running."
+=======
+                    description: |
+                      The status of the container. For example, `"running"` or `"exited"`.
+                    type: "string"
+                    enum: ["created", "running", "paused", "restarting", "removing", "exited", "dead"]
+                  Running:
+                    description: |
+                      Whether this container is running.
+
+                      Note that a running container can be _paused_. The `Running` and `Paused`
+                      booleans are not mutually exclusive:
+
+                      When pausing a container (on Linux), the cgroups freezer is used to suspend
+                      all processes in the container. Freezing the process requires the process to
+                      be running. As a result, paused containers are both `Running` _and_ `Paused`.
+
+                      Use the `Status` field instead to determine if a container's state is "running".
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
                     type: "boolean"
                   Paused:
                     description: "Whether this container is paused."
@@ -4196,6 +4373,14 @@ paths:
           required: true
           description: "ID or name of the container"
           type: "string"
+<<<<<<< HEAD
+=======
+        - name: "condition"
+          in: "query"
+          description: "Wait until a container state reaches the given condition, either 'not-running' (default), 'next-exit', or 'removed'."
+          type: "string"
+          default: "not-running"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       tags: ["Container"]
   /containers/{id}:
     delete:
@@ -4646,6 +4831,30 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
       tags: ["Image"]
+<<<<<<< HEAD
+=======
+  /build/prune:
+    post:
+      summary: "Delete builder cache"
+      produces:
+        - "application/json"
+      operationId: "BuildPrune"
+      responses:
+        200:
+          description: "No error"
+          schema:
+            type: "object"
+            properties:
+              SpaceReclaimed:
+                description: "Disk space reclaimed in bytes"
+                type: "integer"
+                format: "int64"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags: ["Image"]
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
   /images/create:
     post:
       summary: "Create an image"
@@ -5208,6 +5417,13 @@ paths:
                     type: "array"
                     items:
                       type: "string"
+<<<<<<< HEAD
+=======
+                  Log:
+                    type: "array"
+                    items:
+                      type: "string"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
               ExperimentalBuild:
                 type: "boolean"
               HttpProxy:
@@ -6219,6 +6435,14 @@ paths:
   /networks:
     get:
       summary: "List networks"
+<<<<<<< HEAD
+=======
+      description: |
+        Returns a list of networks. For details on the format, see [the network inspect endpoint](#operation/NetworkInspect).
+
+        Note that it uses a different, smaller representation of a network than inspecting a single network. For example,
+        the list of containers attached to the network is not propagated in API versions 1.28 and up.
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       operationId: "NetworkList"
       produces:
         - "application/json"
@@ -6245,12 +6469,15 @@ paths:
                   Config:
                     -
                       Subnet: "172.17.0.0/16"
+<<<<<<< HEAD
                 Containers:
                   39b69226f9d79f5634485fb236a23b2fe4e96a0a94128390a7fbbcc167065867:
                     EndpointID: "ed2419a97c1d9954d05b46e462e7002ea552f216e9b136b80a7db8d98b442eda"
                     MacAddress: "02:42:ac:11:00:02"
                     IPv4Address: "172.17.0.2/16"
                     IPv6Address: ""
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
                 Options:
                   com.docker.network.bridge.default_bridge: "true"
                   com.docker.network.bridge.enable_icc: "true"
@@ -6335,6 +6562,13 @@ paths:
           description: "Detailed inspect output for troubleshooting"
           type: "boolean"
           default: false
+<<<<<<< HEAD
+=======
+        - name: "scope"
+          in: "query"
+          description: "Filter the network by scope (swarm, global, or local)"
+          type: "string"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
       tags: ["Network"]
 
     delete:
@@ -7194,6 +7428,24 @@ paths:
               UpdatedAt: "2016-08-15T16:32:09.623207604Z"
               Version:
                 Index: 51
+<<<<<<< HEAD
+=======
+              RootRotationInProgress: false
+              TLSInfo:
+                TrustRoot: |
+                  -----BEGIN CERTIFICATE-----
+                  MIIBajCCARCgAwIBAgIUbYqrLSOSQHoxD8CwG6Bi2PJi9c8wCgYIKoZIzj0EAwIw
+                  EzERMA8GA1UEAxMIc3dhcm0tY2EwHhcNMTcwNDI0MjE0MzAwWhcNMzcwNDE5MjE0
+                  MzAwWjATMREwDwYDVQQDEwhzd2FybS1jYTBZMBMGByqGSM49AgEGCCqGSM49AwEH
+                  A0IABJk/VyMPYdaqDXJb/VXh5n/1Yuv7iNrxV3Qb3l06XD46seovcDWs3IZNV1lf
+                  3Skyr0ofcchipoiHkXBODojJydSjQjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMB
+                  Af8EBTADAQH/MB0GA1UdDgQWBBRUXxuRcnFjDfR/RIAUQab8ZV/n4jAKBggqhkjO
+                  PQQDAgNIADBFAiAy+JTe6Uc3KyLCMiqGl2GyWGQqQDEcO3/YG36x7om65AIhAJvz
+                  pxv6zFeVEkAEEkqIYi0omA9+CjanB/6Bz4n1uw8H
+                  -----END CERTIFICATE-----
+                CertIssuerSubject: "MBMxETAPBgNVBAMTCHN3YXJtLWNh"
+                CertIssuerPublicKey: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEmT9XIw9h1qoNclv9VeHmf/Vi6/uI2vFXdBveXTpcPjqx6i9wNazchk1XWV/dKTKvSh9xyGKmiIeRcE4OiMnJ1A=="
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
         404:
           description: "no such swarm"
           schema:
@@ -7538,6 +7790,18 @@ paths:
                         Nameservers: ["8.8.8.8"]
                         Search: ["example.org"]
                         Options: ["timeout:3"]
+<<<<<<< HEAD
+=======
+                      Secrets:
+                        -
+                          File:
+                            Name: "www.example.org.key"
+                            UID: "33"
+                            GID: "33"
+                            Mode: 384
+                          SecretID: "fpjqlhnwb19zds35k8wn80lq9"
+                          SecretName: "example_org_domain_key"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
                     LogDriver:
                       Name: "json-file"
                       Options:
@@ -8168,7 +8432,12 @@ paths:
           description: "no error"
           schema:
             $ref: "#/definitions/Secret"
+<<<<<<< HEAD
             example:
+=======
+          examples:
+            application/json:
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
               ID: "ktnbjxoalbkvbvedmg1urrz8h"
               Version:
                 Index: 11
@@ -8263,3 +8532,136 @@ paths:
           format: "int64"
           required: true
       tags: ["Secret"]
+<<<<<<< HEAD
+=======
+  /distribution/{name}/json:
+    get:
+      summary: "Get image information from the registry"
+      description: "Return image digest and platform information by contacting the registry."
+      operationId: "DistributionInspect"
+      produces:
+        - "application/json"
+      responses:
+        200:
+          description: "descriptor and platform information"
+          schema:
+            type: "object"
+            x-go-name: DistributionInspect
+            required: [Descriptor, Platforms]
+            properties:
+              Descriptor:
+                type: "object"
+                description: "A descriptor struct containing digest, media type, and size"
+                properties:
+                  MediaType:
+                    type: "string"
+                  Size:
+                    type: "integer"
+                    format: "int64"
+                  Digest:
+                    type: "string"
+                  URLs:
+                    type: "array"
+                    items:
+                      type: "string"
+              Platforms:
+                type: "array"
+                description: "An array containing all platforms supported by the image"
+                items:
+                  type: "object"
+                  properties:
+                    Architecture:
+                      type: "string"
+                    OS:
+                      type: "string"
+                    OSVersion:
+                      type: "string"
+                    OSFeatures:
+                      type: "array"
+                      items:
+                        type: "string"
+                    Variant:
+                      type: "string"
+                    Features:
+                      type: "array"
+                      items:
+                        type: "string"
+          examples:
+            application/json:
+              Descriptor:
+                MediaType: "application/vnd.docker.distribution.manifest.v2+json"
+                Digest: "sha256:c0537ff6a5218ef531ece93d4984efc99bbf3f7497c0a7726c88e2bb7584dc96"
+                Size: 3987495
+                URLs:
+                  - ""
+              Platforms:
+                - Architecture: "amd64"
+                  OS: "linux"
+                  OSVersion: ""
+                  OSFeatures:
+                    - ""
+                  Variant: ""
+                  Features:
+                    - ""
+        401:
+          description: "Failed authentication or no image found"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+          examples:
+            application/json:
+              message: "No such image: someimage (tag: latest)"
+        500:
+          description: "Server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      parameters:
+        - name: "name"
+          in: "path"
+          description: "Image name or id"
+          type: "string"
+          required: true
+      tags: ["Distribution"]
+  /session:
+    post:
+      summary: "Initialize interactive session"
+      description: |
+        Start a new interactive session with a server. Session allows server to call back to the client for advanced capabilities.
+
+        > **Note**: This endpoint is *experimental* and only available if the daemon is started with experimental
+        > features enabled. The specifications for this endpoint may still change in a future version of the API.
+
+        ### Hijacking
+
+        This endpoint hijacks the HTTP connection to HTTP2 transport that allows the client to expose gPRC services on that connection.
+
+        For example, the client sends this request to upgrade the connection:
+
+        ```
+        POST /session HTTP/1.1
+        Upgrade: h2c
+        Connection: Upgrade
+        ```
+
+        The Docker daemon will respond with a `101 UPGRADED` response follow with the raw stream:
+
+        ```
+        HTTP/1.1 101 UPGRADED
+        Connection: Upgrade
+        Upgrade: h2c
+        ```
+      operationId: "Session"
+      produces:
+        - "application/vnd.docker.raw-stream"
+      responses:
+        101:
+          description: "no error, hijacking successful"
+        400:
+          description: "bad parameter"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        500:
+          description: "server error"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+      tags: ["Session (experimental)"]
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2

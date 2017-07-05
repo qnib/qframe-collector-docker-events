@@ -45,7 +45,11 @@ case "$#" in
 	exit 2
 esac
 
+<<<<<<< HEAD
 if [[ "$GOOS" -eq "linux" ]] && [[ "$GOARCH" != "sparc64" ]]; then
+=======
+if [[ "$GOOS" = "linux" ]] && [[ "$GOARCH" != "sparc64" ]]; then
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	# Use then new build system
 	# Files generated through docker (use $cmd so you can Ctl-C the build or run)
 	$cmd docker build --tag generate:$GOOS $GOOS

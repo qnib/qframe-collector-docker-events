@@ -13,7 +13,10 @@ import (
 	"io/ioutil"
 	"os"
 
+<<<<<<< HEAD
 	"github.com/Sirupsen/logrus"
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"github.com/pkg/errors"
 )
 
@@ -106,7 +109,10 @@ func certPool(caFile string, exclusivePool bool) (*x509.CertPool, error) {
 	if !certPool.AppendCertsFromPEM(pem) {
 		return nil, fmt.Errorf("failed to append certificates from PEM file: %q", caFile)
 	}
+<<<<<<< HEAD
 	logrus.Debugf("Trusting %d certs", len(certPool.Subjects()))
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return certPool, nil
 }
 

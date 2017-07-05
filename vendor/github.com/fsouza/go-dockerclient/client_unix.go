@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 // +build !windows
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // Copyright 2016 go-dockerclient authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
+<<<<<<< HEAD
+=======
+// +build !windows
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 package docker
 
 import (

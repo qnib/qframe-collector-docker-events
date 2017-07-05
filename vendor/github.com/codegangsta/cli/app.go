@@ -85,6 +85,15 @@ type App struct {
 	ErrWriter io.Writer
 	// Other custom info
 	Metadata map[string]interface{}
+<<<<<<< HEAD
+=======
+	// Carries a function which returns app specific info.
+	ExtraInfo func() map[string]string
+	// CustomAppHelpTemplate the text template for app help topic.
+	// cli.go uses text/template to render templates. You can
+	// render custom help text by setting this variable.
+	CustomAppHelpTemplate string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	didSetup bool
 }
@@ -234,7 +243,10 @@ func (a *App) Run(arguments []string) (err error) {
 	if a.Before != nil {
 		beforeErr := a.Before(context)
 		if beforeErr != nil {
+<<<<<<< HEAD
 			fmt.Fprintf(a.Writer, "%v\n\n", beforeErr)
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			ShowAppHelp(context)
 			HandleExitCoder(beforeErr)
 			err = beforeErr

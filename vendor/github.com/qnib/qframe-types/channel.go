@@ -31,3 +31,10 @@ func (qc *QChan) Broadcast() {
 	go qc.Back.Broadcast(0)
 	go qc.Tick.Broadcast(0)
 }
+<<<<<<< HEAD
+=======
+
+func (qc *QChan) SendData(val interface{}) {
+	qc.Data.Send(val)
+}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2

@@ -2,10 +2,15 @@ package qtypes
 
 
 import (
+<<<<<<< HEAD
 	"strings"
 	"github.com/docker/docker/api/types"
 	dc "github.com/fsouza/go-dockerclient"
 	"fmt"
+=======
+	"github.com/docker/docker/api/types"
+	dc "github.com/fsouza/go-dockerclient"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"math"
 )
 
@@ -36,6 +41,7 @@ func NewMemoryStats(src Base, stats *dc.Stats) MemoryStats {
 }
 
 func (ms *MemoryStats) ToMetrics(src string) []Metric {
+<<<<<<< HEAD
 	dim := map[string]string{
 		"container_id": ms.Container.ID,
 		"container_name": strings.Trim(ms.Container.Names[0], "/"),
@@ -48,6 +54,9 @@ func (ms *MemoryStats) ToMetrics(src string) []Metric {
 		dv = strings.Replace(v, ".", "_", -1)
 		dim[k] = dv
 	}
+=======
+	dim := AssembleDefaultDimensions(ms.Container)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return []Metric{
 		ms.NewExtMetric(src, "memory.usage.percent", Gauge, ms.UsageP, dim, ms.Time, true),
 		ms.NewExtMetric(src, "memory.total_rss.percent", Gauge, ms.TotalRssP, dim, ms.Time, true),
