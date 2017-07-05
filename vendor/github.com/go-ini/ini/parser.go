@@ -189,7 +189,11 @@ func (p *parser) readContinuationLines(val string) (string, error) {
 // are quotes \" or \'.
 // It returns false if any other parts also contain same kind of quotes.
 func hasSurroundedQuote(in string, quote byte) bool {
+<<<<<<< HEAD
 	return len(in) > 2 && in[0] == quote && in[len(in)-1] == quote &&
+=======
+	return len(in) >= 2 && in[0] == quote && in[len(in)-1] == quote &&
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		strings.IndexByte(in[1:], quote) == len(in)-2
 }
 

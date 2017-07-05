@@ -12,6 +12,12 @@ import (
 
 // SecretInspectWithRaw returns the secret information with raw data
 func (cli *Client) SecretInspectWithRaw(ctx context.Context, id string) (swarm.Secret, []byte, error) {
+<<<<<<< HEAD
+=======
+	if err := cli.NewVersionError("1.25", "secret inspect"); err != nil {
+		return swarm.Secret{}, nil, err
+	}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	resp, err := cli.get(ctx, "/secrets/"+id, nil, nil)
 	if err != nil {
 		if resp.statusCode == http.StatusNotFound {

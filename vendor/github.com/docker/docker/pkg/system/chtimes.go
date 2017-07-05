@@ -2,6 +2,7 @@ package system
 
 import (
 	"os"
+<<<<<<< HEAD
 	"syscall"
 	"time"
 	"unsafe"
@@ -22,6 +23,11 @@ func init() {
 	}
 }
 
+=======
+	"time"
+)
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // Chtimes changes the access time and modified time of a file at the given path
 func Chtimes(name string, atime time.Time, mtime time.Time) error {
 	unixMinTime := time.Unix(0, 0)

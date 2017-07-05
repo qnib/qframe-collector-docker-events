@@ -14,8 +14,13 @@ It consists of various components in this repository:
 
 The API is defined by the [Swagger](http://swagger.io/specification/) definition in `api/swagger.yaml`. This definition can be used to:
 
+<<<<<<< HEAD
 1. To automatically generate documentation.
 2. To automatically generate the Go server and client. (A work-in-progress.)
+=======
+1. Automatically generate documentation.
+2. Automatically generate the Go server and client. (A work-in-progress.)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 3. Provide a machine readable version of the API for introspecting what it can do, automatically generating clients for other languages, etc.
 
 ## Updating the API documentation

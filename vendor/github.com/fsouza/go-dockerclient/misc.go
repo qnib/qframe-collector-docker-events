@@ -9,7 +9,11 @@ import (
 	"net"
 	"strings"
 
+<<<<<<< HEAD
 	"github.com/moby/moby/api/types/swarm"
+=======
+	"github.com/docker/docker/api/types/swarm"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // Version returns version information about the docker server.
@@ -79,6 +83,13 @@ type DockerInfo struct {
 	ServerVersion      string
 	ClusterStore       string
 	ClusterAdvertise   string
+<<<<<<< HEAD
+=======
+	Isolation          string
+	InitBinary         string
+	DefaultRuntime     string
+	LiveRestoreEnabled bool
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	Swarm              swarm.Info
 }
 

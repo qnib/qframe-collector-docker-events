@@ -83,8 +83,13 @@ sec1, err := cfg.GetSection("Section")
 sec2, err := cfg.GetSection("SecTIOn")
 
 // key1 and key2 are the exactly same key object
+<<<<<<< HEAD
 key1, err := cfg.GetKey("Key")
 key2, err := cfg.GetKey("KeY")
+=======
+key1, err := sec1.GetKey("Key")
+key2, err := sec2.GetKey("KeY")
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 ```
 
 #### MySQL-like boolean key 
@@ -122,6 +127,15 @@ Take care that following format will be treated as comment:
 
 If you want to save a value with `#` or `;`, please quote them with ``` ` ``` or ``` """ ```.
 
+<<<<<<< HEAD
+=======
+Alternatively, you can use following `LoadOptions` to completely ignore inline comments:
+
+```go
+cfg, err := LoadSources(LoadOptions{IgnoreInlineComment: true}, "app.ini"))
+```
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 ### Working with sections
 
 To get a section, you would need to:

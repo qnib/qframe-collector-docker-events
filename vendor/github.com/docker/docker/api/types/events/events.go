@@ -13,6 +13,15 @@ const (
 	PluginEventType = "plugin"
 	// VolumeEventType is the event type that volumes generate
 	VolumeEventType = "volume"
+<<<<<<< HEAD
+=======
+	// ServiceEventType is the event type that services generate
+	ServiceEventType = "service"
+	// NodeEventType is the event type that nodes generate
+	NodeEventType = "node"
+	// SecretEventType is the event type that secrets generate
+	SecretEventType = "secret"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // Actor describes something that generates events,
@@ -36,6 +45,11 @@ type Message struct {
 	Type   string
 	Action string
 	Actor  Actor
+<<<<<<< HEAD
+=======
+	// Engine events are local scope. Cluster events are swarm scope.
+	Scope string `json:"scope,omitempty"`
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	Time     int64 `json:"time,omitempty"`
 	TimeNano int64 `json:"timeNano,omitempty"`

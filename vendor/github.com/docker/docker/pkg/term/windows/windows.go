@@ -2,7 +2,11 @@
 // When asked for the set of standard streams (e.g., stdin, stdout, stderr), the code will create
 // and return pseudo-streams that convert ANSI sequences to / from Windows Console API calls.
 
+<<<<<<< HEAD
 package windows
+=======
+package windowsconsole
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 import (
 	"io/ioutil"

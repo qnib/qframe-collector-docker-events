@@ -47,7 +47,11 @@ var CommandHelpTemplate = `NAME:
    {{.HelpName}} - {{.Usage}}
 
 USAGE:
+<<<<<<< HEAD
    {{.HelpName}}{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{if .Category}}
+=======
+   {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}}{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}{{if .Category}}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 CATEGORY:
    {{.Category}}{{end}}{{if .Description}}
@@ -67,7 +71,11 @@ var SubcommandHelpTemplate = `NAME:
    {{.HelpName}} - {{if .Description}}{{.Description}}{{else}}{{.Usage}}{{end}}
 
 USAGE:
+<<<<<<< HEAD
    {{.HelpName}} command{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+=======
+   {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}} command{{if .VisibleFlags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 COMMANDS:{{range .VisibleCategories}}{{if .Name}}
    {{.Name}}:{{end}}{{range .VisibleCommands}}
@@ -112,17 +120,54 @@ var helpSubcommand = Command{
 // Prints help for the App or Command
 type helpPrinter func(w io.Writer, templ string, data interface{})
 
+<<<<<<< HEAD
+=======
+// Prints help for the App or Command with custom template function.
+type helpPrinterCustom func(w io.Writer, templ string, data interface{}, customFunc map[string]interface{})
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // HelpPrinter is a function that writes the help output. If not set a default
 // is used. The function signature is:
 // func(w io.Writer, templ string, data interface{})
 var HelpPrinter helpPrinter = printHelp
 
+<<<<<<< HEAD
 // VersionPrinter prints the version for the App
 var VersionPrinter = printVersion
 
 // ShowAppHelp is an action that displays the help.
 func ShowAppHelp(c *Context) error {
 	HelpPrinter(c.App.Writer, AppHelpTemplate, c.App)
+=======
+// HelpPrinterCustom is same as HelpPrinter but
+// takes a custom function for template function map.
+var HelpPrinterCustom helpPrinterCustom = printHelpCustom
+
+// VersionPrinter prints the version for the App
+var VersionPrinter = printVersion
+
+// ShowAppHelpAndExit - Prints the list of subcommands for the app and exits with exit code.
+func ShowAppHelpAndExit(c *Context, exitCode int) {
+	ShowAppHelp(c)
+	os.Exit(exitCode)
+}
+
+// ShowAppHelp is an action that displays the help.
+func ShowAppHelp(c *Context) (err error) {
+	if c.App.CustomAppHelpTemplate == "" {
+		HelpPrinter(c.App.Writer, AppHelpTemplate, c.App)
+		return
+	}
+	customAppData := func() map[string]interface{} {
+		if c.App.ExtraInfo == nil {
+			return nil
+		}
+		return map[string]interface{}{
+			"ExtraInfo": c.App.ExtraInfo,
+		}
+	}
+	HelpPrinterCustom(c.App.Writer, c.App.CustomAppHelpTemplate, c.App, customAppData())
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return nil
 }
 
@@ -138,6 +183,15 @@ func DefaultAppComplete(c *Context) {
 	}
 }
 
+<<<<<<< HEAD
+=======
+// ShowCommandHelpAndExit - exits with code after showing help
+func ShowCommandHelpAndExit(c *Context, command string, code int) {
+	ShowCommandHelp(c, command)
+	os.Exit(code)
+}
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 // ShowCommandHelp prints help for the given command
 func ShowCommandHelp(ctx *Context, command string) error {
 	// show the subcommand help for a command with subcommands
@@ -148,7 +202,15 @@ func ShowCommandHelp(ctx *Context, command string) error {
 
 	for _, c := range ctx.App.Commands {
 		if c.HasName(command) {
+<<<<<<< HEAD
 			HelpPrinter(ctx.App.Writer, CommandHelpTemplate, c)
+=======
+			if c.CustomHelpTemplate != "" {
+				HelpPrinterCustom(ctx.App.Writer, c.CustomHelpTemplate, c, nil)
+			} else {
+				HelpPrinter(ctx.App.Writer, CommandHelpTemplate, c)
+			}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			return nil
 		}
 	}
@@ -191,10 +253,22 @@ func ShowCommandCompletions(ctx *Context, command string) {
 	}
 }
 
+<<<<<<< HEAD
 func printHelp(out io.Writer, templ string, data interface{}) {
 	funcMap := template.FuncMap{
 		"join": strings.Join,
 	}
+=======
+func printHelpCustom(out io.Writer, templ string, data interface{}, customFunc map[string]interface{}) {
+	funcMap := template.FuncMap{
+		"join": strings.Join,
+	}
+	if customFunc != nil {
+		for key, value := range customFunc {
+			funcMap[key] = value
+		}
+	}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	w := tabwriter.NewWriter(out, 1, 8, 2, ' ', 0)
 	t := template.Must(template.New("help").Funcs(funcMap).Parse(templ))
@@ -210,10 +284,21 @@ func printHelp(out io.Writer, templ string, data interface{}) {
 	w.Flush()
 }
 
+<<<<<<< HEAD
 func checkVersion(c *Context) bool {
 	found := false
 	if VersionFlag.Name != "" {
 		eachName(VersionFlag.Name, func(name string) {
+=======
+func printHelp(out io.Writer, templ string, data interface{}) {
+	printHelpCustom(out, templ, data, nil)
+}
+
+func checkVersion(c *Context) bool {
+	found := false
+	if VersionFlag.GetName() != "" {
+		eachName(VersionFlag.GetName(), func(name string) {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			if c.GlobalBool(name) || c.Bool(name) {
 				found = true
 			}
@@ -224,8 +309,13 @@ func checkVersion(c *Context) bool {
 
 func checkHelp(c *Context) bool {
 	found := false
+<<<<<<< HEAD
 	if HelpFlag.Name != "" {
 		eachName(HelpFlag.Name, func(name string) {
+=======
+	if HelpFlag.GetName() != "" {
+		eachName(HelpFlag.GetName(), func(name string) {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			if c.GlobalBool(name) || c.Bool(name) {
 				found = true
 			}
@@ -260,7 +350,11 @@ func checkShellCompleteFlag(a *App, arguments []string) (bool, []string) {
 	pos := len(arguments) - 1
 	lastArg := arguments[pos]
 
+<<<<<<< HEAD
 	if lastArg != "--"+BashCompletionFlag.Name {
+=======
+	if lastArg != "--"+BashCompletionFlag.GetName() {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return false, arguments
 	}
 

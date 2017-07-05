@@ -52,6 +52,10 @@ type NodeDescription struct {
 	Platform  Platform          `json:",omitempty"`
 	Resources Resources         `json:",omitempty"`
 	Engine    EngineDescription `json:",omitempty"`
+<<<<<<< HEAD
+=======
+	TLSInfo   TLSInfo           `json:",omitempty"`
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // Platform represents the platform (Arch/OS).

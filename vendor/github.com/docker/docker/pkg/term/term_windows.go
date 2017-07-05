@@ -6,10 +6,17 @@ import (
 	"io"
 	"os"
 	"os/signal"
+<<<<<<< HEAD
 	"syscall"
 
 	"github.com/Azure/go-ansiterm/winterm"
 	"github.com/docker/docker/pkg/term/windows"
+=======
+
+	"github.com/Azure/go-ansiterm/winterm"
+	"github.com/docker/docker/pkg/term/windows"
+	"golang.org/x/sys/windows"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // State holds the console mode for the terminal.
@@ -79,19 +86,31 @@ func StdStreams() (stdIn io.ReadCloser, stdOut, stdErr io.Writer) {
 	}
 
 	if emulateStdin {
+<<<<<<< HEAD
 		stdIn = windows.NewAnsiReader(syscall.STD_INPUT_HANDLE)
+=======
+		stdIn = windowsconsole.NewAnsiReader(windows.STD_INPUT_HANDLE)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	} else {
 		stdIn = os.Stdin
 	}
 
 	if emulateStdout {
+<<<<<<< HEAD
 		stdOut = windows.NewAnsiWriter(syscall.STD_OUTPUT_HANDLE)
+=======
+		stdOut = windowsconsole.NewAnsiWriter(windows.STD_OUTPUT_HANDLE)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	} else {
 		stdOut = os.Stdout
 	}
 
 	if emulateStderr {
+<<<<<<< HEAD
 		stdErr = windows.NewAnsiWriter(syscall.STD_ERROR_HANDLE)
+=======
+		stdErr = windowsconsole.NewAnsiWriter(windows.STD_ERROR_HANDLE)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	} else {
 		stdErr = os.Stderr
 	}
@@ -101,7 +120,11 @@ func StdStreams() (stdIn io.ReadCloser, stdOut, stdErr io.Writer) {
 
 // GetFdInfo returns the file descriptor for an os.File and indicates whether the file represents a terminal.
 func GetFdInfo(in interface{}) (uintptr, bool) {
+<<<<<<< HEAD
 	return windows.GetHandleInfo(in)
+=======
+	return windowsconsole.GetHandleInfo(in)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // GetWinsize returns the window size based on the specified file descriptor.
@@ -121,7 +144,11 @@ func GetWinsize(fd uintptr) (*Winsize, error) {
 
 // IsTerminal returns true if the given file descriptor is a terminal.
 func IsTerminal(fd uintptr) bool {
+<<<<<<< HEAD
 	return windows.IsConsole(fd)
+=======
+	return windowsconsole.IsConsole(fd)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 // RestoreTerminal restores the terminal connected to the given file descriptor

@@ -1,8 +1,13 @@
 package client
 
 import (
+<<<<<<< HEAD
 	"crypto/tls"
 	"errors"
+=======
+	"bufio"
+	"crypto/tls"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"fmt"
 	"net"
 	"net/http"
@@ -14,6 +19,10 @@ import (
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/pkg/tlsconfig"
 	"github.com/docker/go-connections/sockets"
+<<<<<<< HEAD
+=======
+	"github.com/pkg/errors"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"golang.org/x/net/context"
 )
 
@@ -46,6 +55,7 @@ func (cli *Client) postHijacked(ctx context.Context, path string, query url.Valu
 	}
 	req = cli.addHeaders(req, headers)
 
+<<<<<<< HEAD
 	req.Host = cli.addr
 	req.Header.Set("Connection", "Upgrade")
 	req.Header.Set("Upgrade", "tcp")
@@ -77,6 +87,14 @@ func (cli *Client) postHijacked(ctx context.Context, path string, query url.Valu
 	rwc, br := clientconn.Hijack()
 
 	return types.HijackedResponse{Conn: rwc, Reader: br}, err
+=======
+	conn, err := cli.setupHijackConn(req, "tcp")
+	if err != nil {
+		return types.HijackedResponse{}, err
+	}
+
+	return types.HijackedResponse{Conn: conn, Reader: bufio.NewReader(conn)}, err
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 func tlsDial(network, addr string, config *tls.Config) (net.Conn, error) {
@@ -175,3 +193,59 @@ func dial(proto, addr string, tlsConfig *tls.Config) (net.Conn, error) {
 	}
 	return net.Dial(proto, addr)
 }
+<<<<<<< HEAD
+=======
+
+func (cli *Client) setupHijackConn(req *http.Request, proto string) (net.Conn, error) {
+	req.Host = cli.addr
+	req.Header.Set("Connection", "Upgrade")
+	req.Header.Set("Upgrade", proto)
+
+	conn, err := dial(cli.proto, cli.addr, resolveTLSConfig(cli.client.Transport))
+	if err != nil {
+		return nil, errors.Wrap(err, "cannot connect to the Docker daemon. Is 'docker daemon' running on this host?")
+	}
+
+	// When we set up a TCP connection for hijack, there could be long periods
+	// of inactivity (a long running command with no output) that in certain
+	// network setups may cause ECONNTIMEOUT, leaving the client in an unknown
+	// state. Setting TCP KeepAlive on the socket connection will prohibit
+	// ECONNTIMEOUT unless the socket connection truly is broken
+	if tcpConn, ok := conn.(*net.TCPConn); ok {
+		tcpConn.SetKeepAlive(true)
+		tcpConn.SetKeepAlivePeriod(30 * time.Second)
+	}
+
+	clientconn := httputil.NewClientConn(conn, nil)
+	defer clientconn.Close()
+
+	// Server hijacks the connection, error 'connection closed' expected
+	resp, err := clientconn.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	if resp.StatusCode != http.StatusSwitchingProtocols {
+		resp.Body.Close()
+		return nil, fmt.Errorf("unable to upgrade to %s, received %d", proto, resp.StatusCode)
+	}
+
+	c, br := clientconn.Hijack()
+	if br.Buffered() > 0 {
+		// If there is buffered content, wrap the connection
+		c = &hijackedConn{c, br}
+	} else {
+		br.Reset(nil)
+	}
+
+	return c, nil
+}
+
+type hijackedConn struct {
+	net.Conn
+	r *bufio.Reader
+}
+
+func (c *hijackedConn) Read(b []byte) (int, error) {
+	return c.r.Read(b)
+}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2

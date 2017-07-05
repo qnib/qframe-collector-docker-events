@@ -103,7 +103,11 @@ All development commands can be seen in the [Makefile](Makefile).
 Commited code must pass:
 
 * [golint](https://github.com/golang/lint) (with some exceptions, see the Makefile).
+<<<<<<< HEAD
 * [go vet](https://godoc.org/golang.org/x/tools/cmd/vet)
+=======
+* [go vet](https://golang.org/cmd/vet/)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 * [gofmt](https://golang.org/cmd/gofmt)
 * [go test](https://golang.org/cmd/go/#hdr-Test_packages)
 

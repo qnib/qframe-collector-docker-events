@@ -4,6 +4,10 @@ package winio
 
 import (
 	"os"
+<<<<<<< HEAD
+=======
+	"runtime"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	"syscall"
 	"unsafe"
 )
@@ -28,6 +32,10 @@ func GetFileBasicInfo(f *os.File) (*FileBasicInfo, error) {
 	if err := getFileInformationByHandleEx(syscall.Handle(f.Fd()), fileBasicInfo, (*byte)(unsafe.Pointer(bi)), uint32(unsafe.Sizeof(*bi))); err != nil {
 		return nil, &os.PathError{Op: "GetFileInformationByHandleEx", Path: f.Name(), Err: err}
 	}
+<<<<<<< HEAD
+=======
+	runtime.KeepAlive(f)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return bi, nil
 }
 
@@ -36,6 +44,10 @@ func SetFileBasicInfo(f *os.File, bi *FileBasicInfo) error {
 	if err := setFileInformationByHandle(syscall.Handle(f.Fd()), fileBasicInfo, (*byte)(unsafe.Pointer(bi)), uint32(unsafe.Sizeof(*bi))); err != nil {
 		return &os.PathError{Op: "SetFileInformationByHandle", Path: f.Name(), Err: err}
 	}
+<<<<<<< HEAD
+=======
+	runtime.KeepAlive(f)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return nil
 }
 
@@ -52,5 +64,9 @@ func GetFileID(f *os.File) (*FileIDInfo, error) {
 	if err := getFileInformationByHandleEx(syscall.Handle(f.Fd()), fileIDInfo, (*byte)(unsafe.Pointer(fileID)), uint32(unsafe.Sizeof(*fileID))); err != nil {
 		return nil, &os.PathError{Op: "GetFileInformationByHandleEx", Path: f.Name(), Err: err}
 	}
+<<<<<<< HEAD
+=======
+	runtime.KeepAlive(f)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	return fileID, nil
 }

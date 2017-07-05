@@ -155,6 +155,29 @@ type Flock_t struct {
 	Pad_cgo_1 [4]byte
 }
 
+<<<<<<< HEAD
+=======
+type FscryptPolicy struct {
+	Version                   uint8
+	Contents_encryption_mode  uint8
+	Filenames_encryption_mode uint8
+	Flags                     uint8
+	Master_key_descriptor     [8]uint8
+}
+
+type FscryptKey struct {
+	Mode uint32
+	Raw  [64]uint8
+	Size uint32
+}
+
+type KeyctlDHParams struct {
+	Private int32
+	Prime   int32
+	Base    int32
+}
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 const (
 	FADV_NORMAL     = 0x0
 	FADV_RANDOM     = 0x1
@@ -554,6 +577,7 @@ type InotifyEvent struct {
 const SizeofInotifyEvent = 0x10
 
 type PtraceRegs struct {
+<<<<<<< HEAD
 	Regs        [109]uint32
 	U_tsize     uint32
 	U_dsize     uint32
@@ -565,6 +589,15 @@ type PtraceRegs struct {
 	U_ar0       *byte
 	Magic       uint32
 	U_comm      [32]int8
+=======
+	Regs     [32]uint64
+	Lo       uint64
+	Hi       uint64
+	Epc      uint64
+	Badvaddr uint64
+	Status   uint64
+	Cause    uint64
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 type FdSet struct {
@@ -638,6 +671,11 @@ type Sigset_t struct {
 	X__val [32]uint32
 }
 
+<<<<<<< HEAD
+=======
+const RNDGETENTCNT = 0x40045200
+
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 const _SC_PAGESIZE = 0x1e
 
 type Termios struct {

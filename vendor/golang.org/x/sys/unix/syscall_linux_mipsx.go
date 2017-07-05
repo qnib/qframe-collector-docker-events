@@ -211,9 +211,15 @@ func Setrlimit(resource int, rlim *Rlimit) (err error) {
 	return setrlimit(resource, &rl)
 }
 
+<<<<<<< HEAD
 func (r *PtraceRegs) PC() uint64 { return uint64(r.Regs[64]) }
 
 func (r *PtraceRegs) SetPC(pc uint64) { r.Regs[64] = uint32(pc) }
+=======
+func (r *PtraceRegs) PC() uint64 { return r.Epc }
+
+func (r *PtraceRegs) SetPC(pc uint64) { r.Epc = pc }
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 func (iov *Iovec) SetLen(length int) {
 	iov.Len = uint32(length)

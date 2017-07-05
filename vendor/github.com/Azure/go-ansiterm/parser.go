@@ -5,7 +5,11 @@ import (
 	"io/ioutil"
 	"os"
 
+<<<<<<< HEAD
 	"github.com/Sirupsen/logrus"
+=======
+	"github.com/sirupsen/logrus"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 var logger *logrus.Logger

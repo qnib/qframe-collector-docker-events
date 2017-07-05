@@ -25,3 +25,19 @@ type Driver struct {
 	Name    string            `json:",omitempty"`
 	Options map[string]string `json:",omitempty"`
 }
+<<<<<<< HEAD
+=======
+
+// TLSInfo represents the TLS information about what CA certificate is trusted,
+// and who the issuer for a TLS certificate is
+type TLSInfo struct {
+	// TrustRoot is the trusted CA root certificate in PEM format
+	TrustRoot string `json:",omitempty"`
+
+	// CertIssuer is the raw subject bytes of the issuer
+	CertIssuerSubject []byte `json:",omitempty"`
+
+	// CertIssuerPublicKey is the raw public key bytes of the issuer
+	CertIssuerPublicKey []byte `json:",omitempty"`
+}
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2

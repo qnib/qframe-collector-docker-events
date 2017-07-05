@@ -59,6 +59,14 @@ type Command struct {
 	// Full name of command for help, defaults to full command name, including parent commands.
 	HelpName        string
 	commandNamePath []string
+<<<<<<< HEAD
+=======
+
+	// CustomHelpTemplate the text template for the command help topic.
+	// cli.go uses text/template to render templates. You can
+	// render custom help text by setting this variable.
+	CustomHelpTemplate string
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
 
 type CommandsByName []Command
@@ -154,12 +162,17 @@ func (c Command) Run(ctx *Context) (err error) {
 	}
 
 	context := NewContext(ctx.App, set, ctx)
+<<<<<<< HEAD
+=======
+	context.Command = c
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	if checkCommandCompletions(context, c.Name) {
 		return nil
 	}
 
 	if err != nil {
 		if c.OnUsageError != nil {
+<<<<<<< HEAD
 			err := c.OnUsageError(ctx, err, false)
 			HandleExitCoder(err)
 			return err
@@ -167,6 +180,15 @@ func (c Command) Run(ctx *Context) (err error) {
 		fmt.Fprintln(ctx.App.Writer, "Incorrect Usage:", err.Error())
 		fmt.Fprintln(ctx.App.Writer)
 		ShowCommandHelp(ctx, c.Name)
+=======
+			err := c.OnUsageError(context, err, false)
+			HandleExitCoder(err)
+			return err
+		}
+		fmt.Fprintln(context.App.Writer, "Incorrect Usage:", err.Error())
+		fmt.Fprintln(context.App.Writer)
+		ShowCommandHelp(context, c.Name)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return err
 	}
 
@@ -191,9 +213,13 @@ func (c Command) Run(ctx *Context) (err error) {
 	if c.Before != nil {
 		err = c.Before(context)
 		if err != nil {
+<<<<<<< HEAD
 			fmt.Fprintln(ctx.App.Writer, err)
 			fmt.Fprintln(ctx.App.Writer)
 			ShowCommandHelp(ctx, c.Name)
+=======
+			ShowCommandHelp(context, c.Name)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 			HandleExitCoder(err)
 			return err
 		}
@@ -203,7 +229,10 @@ func (c Command) Run(ctx *Context) (err error) {
 		c.Action = helpSubcommand.Action
 	}
 
+<<<<<<< HEAD
 	context.Command = c
+=======
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	err = HandleAction(c.Action, context)
 
 	if err != nil {
@@ -250,6 +279,10 @@ func (c Command) startApp(ctx *Context) error {
 
 	// set CommandNotFound
 	app.CommandNotFound = ctx.App.CommandNotFound
+<<<<<<< HEAD
+=======
+	app.CustomAppHelpTemplate = c.CustomHelpTemplate
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	// set the flags and commands
 	app.Commands = c.Subcommands
@@ -285,6 +318,10 @@ func (c Command) startApp(ctx *Context) error {
 	} else {
 		app.Action = helpSubcommand.Action
 	}
+<<<<<<< HEAD
+=======
+	app.OnUsageError = c.OnUsageError
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 
 	for index, cc := range app.Commands {
 		app.Commands[index].commandNamePath = []string{c.Name, cc.Name}

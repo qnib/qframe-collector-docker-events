@@ -7,8 +7,15 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+<<<<<<< HEAD
 	"syscall"
 	"unsafe"
+=======
+	"syscall" // only for exec
+	"unsafe"
+
+	"golang.org/x/sys/unix"
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 )
 
 // If arg2 is nonzero, set the "child subreaper" attribute of the
@@ -53,8 +60,13 @@ func Execv(cmd string, args []string, env []string) error {
 	return syscall.Exec(name, args, env)
 }
 
+<<<<<<< HEAD
 func Prlimit(pid, resource int, limit syscall.Rlimit) error {
 	_, _, err := syscall.RawSyscall6(syscall.SYS_PRLIMIT64, uintptr(pid), uintptr(resource), uintptr(unsafe.Pointer(&limit)), uintptr(unsafe.Pointer(&limit)), 0, 0)
+=======
+func Prlimit(pid, resource int, limit unix.Rlimit) error {
+	_, _, err := unix.RawSyscall6(unix.SYS_PRLIMIT64, uintptr(pid), uintptr(resource), uintptr(unsafe.Pointer(&limit)), uintptr(unsafe.Pointer(&limit)), 0, 0)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	if err != 0 {
 		return err
 	}
@@ -62,7 +74,11 @@ func Prlimit(pid, resource int, limit syscall.Rlimit) error {
 }
 
 func SetParentDeathSignal(sig uintptr) error {
+<<<<<<< HEAD
 	if _, _, err := syscall.RawSyscall(syscall.SYS_PRCTL, syscall.PR_SET_PDEATHSIG, sig, 0); err != 0 {
+=======
+	if _, _, err := unix.RawSyscall(unix.SYS_PRCTL, unix.PR_SET_PDEATHSIG, sig, 0); err != 0 {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return err
 	}
 	return nil
@@ -70,7 +86,11 @@ func SetParentDeathSignal(sig uintptr) error {
 
 func GetParentDeathSignal() (ParentDeathSignal, error) {
 	var sig int
+<<<<<<< HEAD
 	_, _, err := syscall.RawSyscall(syscall.SYS_PRCTL, syscall.PR_GET_PDEATHSIG, uintptr(unsafe.Pointer(&sig)), 0)
+=======
+	_, _, err := unix.RawSyscall(unix.SYS_PRCTL, unix.PR_GET_PDEATHSIG, uintptr(unsafe.Pointer(&sig)), 0)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 	if err != 0 {
 		return -1, err
 	}
@@ -78,7 +98,11 @@ func GetParentDeathSignal() (ParentDeathSignal, error) {
 }
 
 func SetKeepCaps() error {
+<<<<<<< HEAD
 	if _, _, err := syscall.RawSyscall(syscall.SYS_PRCTL, syscall.PR_SET_KEEPCAPS, 1, 0); err != 0 {
+=======
+	if _, _, err := unix.RawSyscall(unix.SYS_PRCTL, unix.PR_SET_KEEPCAPS, 1, 0); err != 0 {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return err
 	}
 
@@ -86,7 +110,11 @@ func SetKeepCaps() error {
 }
 
 func ClearKeepCaps() error {
+<<<<<<< HEAD
 	if _, _, err := syscall.RawSyscall(syscall.SYS_PRCTL, syscall.PR_SET_KEEPCAPS, 0, 0); err != 0 {
+=======
+	if _, _, err := unix.RawSyscall(unix.SYS_PRCTL, unix.PR_SET_KEEPCAPS, 0, 0); err != 0 {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return err
 	}
 
@@ -94,7 +122,11 @@ func ClearKeepCaps() error {
 }
 
 func Setctty() error {
+<<<<<<< HEAD
 	if _, _, err := syscall.RawSyscall(syscall.SYS_IOCTL, 0, uintptr(syscall.TIOCSCTTY), 0); err != 0 {
+=======
+	if _, _, err := unix.RawSyscall(unix.SYS_IOCTL, 0, uintptr(unix.TIOCSCTTY), 0); err != 0 {
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 		return err
 	}
 	return nil
@@ -131,6 +163,7 @@ func RunningInUserNS() bool {
 
 // SetSubreaper sets the value i as the subreaper setting for the calling process
 func SetSubreaper(i int) error {
+<<<<<<< HEAD
 	return Prctl(PR_SET_CHILD_SUBREAPER, uintptr(i), 0, 0, 0)
 }
 
@@ -140,4 +173,7 @@ func Prctl(option int, arg2, arg3, arg4, arg5 uintptr) (err error) {
 		err = e1
 	}
 	return
+=======
+	return unix.Prctl(PR_SET_CHILD_SUBREAPER, uintptr(i), 0, 0, 0)
+>>>>>>> c22478687a5c584b3f2f3b5d68ca7552a70385b2
 }
