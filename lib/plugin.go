@@ -23,6 +23,7 @@ const (
 type Plugin struct {
 	qtypes.Plugin
 	engCli *client.Client
+	info types.Info
 }
 
 func New(qChan qtypes.QChan, cfg *config.Config, name string) (Plugin, error) {
@@ -43,12 +44,12 @@ func (p *Plugin) Run() {
 		p.Log("error", fmt.Sprintf("Could not connect docker/docker/client to '%s': %v", dockerHost, err))
 		return
 	}
-	info, err := engineCli.Info(context.Background())
+	p.info, err = engineCli.Info(context.Background())
 	if err != nil {
-		p.Log("error", fmt.Sprintf("Error during Info(): %v >err> %s", info, err))
+		p.Log("error", fmt.Sprintf("Error during Info(): %v >err> %s", p.info, err))
 		return
 	} else {
-		p.Log("info", fmt.Sprintf("Connected to '%s' / v'%s'", info.Name, info.ServerVersion))
+		p.Log("info", fmt.Sprintf("Connected to '%s' / v'%s'", p.info.Name, p.info.ServerVersion))
 	}
 	// Inventory Init
 	inv := qframe_inventory.NewInventory()
@@ -90,7 +91,7 @@ func (p *Plugin) Run() {
 							continue
 						}
 						inv.SetItem(dMsg.Actor.ID, cnt)
-						ce := qtypes.NewContainerEvent(base, cnt, dMsg)
+						ce := qtypes.NewContainerEvent(base, cnt, dMsg, p.info)
 						for k, v := range data {
 							ce.Data[k] = v
 						}
@@ -107,7 +108,7 @@ func (p *Plugin) Run() {
 					p.Log("error", msg)
 					continue
 				}
-				ce := qtypes.NewContainerEvent(base, cnt, dMsg)
+				ce := qtypes.NewContainerEvent(base, cnt, dMsg, p.info)
 				for k, v := range data {
 					ce.Data[k] = v
 				}
