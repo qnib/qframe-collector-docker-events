@@ -65,8 +65,8 @@
 		{
 			"checksumSHA1": "xvSa+kz+sCPBTlSLqARaBgniqjE=",
 			"path": "github.com/docker/docker/api/types",
-			"revision": "82c2a08b6018586f3c8f35405c3bd6fce3c78ccd",
-			"revisionTime": "2017-07-04T14:12:39Z"
+			"revision": "714c226b431c73efa43373fb7a284408b709c80f",
+			"revisionTime": "2017-07-03T09:18:11Z"
 		},
 		{
 			"checksumSHA1": "jVJDbe0IcyjoKc2xbohwzQr+FF0=",
