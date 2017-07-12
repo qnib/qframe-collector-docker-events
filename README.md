@@ -1,6 +1,8 @@
 # qframe-collector-docker-events
 qframe collector to subscribe to docker-events
 
+**Depreciated!** Moved to [qframe/collector-docker-events](https://github.com/qframe/collector-docker-events)
+
 ## main.go
 
 To test the plugin a main function will start the plugin and wait for a msg on the Data channel.
